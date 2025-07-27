@@ -1,0 +1,207 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Definition of the design system. All colors, gradients, fonts, etc should be defined here. 
+All colors MUST be HSL.
+*/
+
+@layer base {
+  :root {
+    /* Light finance theme */
+    --background: 0 0% 98%;
+    --foreground: 222 15% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 222 15% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 15% 15%;
+
+    /* Professional blue primary */
+    --primary: 220 70% 50%;
+    --primary-foreground: 0 0% 98%;
+    --primary-glow: 220 70% 60%;
+
+    /* Subtle gray secondary */
+    --secondary: 210 10% 92%;
+    --secondary-foreground: 222 15% 15%;
+
+    --muted: 210 10% 95%;
+    --muted-foreground: 215 15% 45%;
+
+    /* Gold accent for premium feel */
+    --accent: 45 90% 55%;
+    --accent-foreground: 222 15% 15%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 210 15% 88%;
+    --input: 210 15% 90%;
+    --ring: 220 70% 50%;
+
+    --radius: 0.75rem;
+
+    /* Light theme gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(220 70% 55%), hsl(280 60% 60%));
+    --gradient-accent: linear-gradient(135deg, hsl(45 90% 60%), hsl(35 90% 55%));
+    --gradient-light: linear-gradient(180deg, hsl(0 0% 98%), hsl(210 10% 96%));
+    --gradient-hero: linear-gradient(135deg, hsl(220 70% 95%), hsl(280 60% 95%));
+    
+    /* Light theme shadows */
+    --shadow-3d: 0 20px 60px -10px hsl(220 70% 50% / 0.15);
+    --shadow-glow: 0 0 40px hsl(220 70% 60% / 0.2);
+    --shadow-card: 0 4px 20px -2px hsl(222 15% 15% / 0.1);
+
+    /* Animation timings */
+    --transition-smooth: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-bounce: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+    --sidebar-background: 0 0% 98%;
+
+    --sidebar-foreground: 240 5.3% 26.1%;
+
+    --sidebar-primary: 240 5.9% 10%;
+
+    --sidebar-primary-foreground: 0 0% 98%;
+
+    --sidebar-accent: 240 4.8% 95.9%;
+
+    --sidebar-accent-foreground: 240 5.9% 10%;
+
+    --sidebar-border: 220 13% 91%;
+
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+
+  .dark {
+    /* Dark mode overrides if needed */
+    --background: 222 15% 8%;
+    --foreground: 210 40% 98%;
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    scroll-behavior: smooth;
+    overscroll-behavior-y: none;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    overscroll-behavior-y: none;
+  }
+}
+
+@layer utilities {
+  /* Enhanced 3D Parallax Utilities */
+  .parallax-layer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    will-change: transform, filter, opacity;
+  }
+
+  .parallax-bg {
+    will-change: transform, filter, opacity;
+    backface-visibility: hidden;
+    transform-style: preserve-3d;
+    transition: filter 0.3s ease-out;
+  }
+
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
+
+  .gradient-accent {
+    background: var(--gradient-accent);
+  }
+
+  .gradient-light {
+    background: var(--gradient-light);
+  }
+
+  .gradient-hero {
+    background: var(--gradient-hero);
+  }
+
+  .shadow-3d {
+    box-shadow: var(--shadow-3d);
+  }
+
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .shadow-card {
+    box-shadow: var(--shadow-card);
+  }
+
+  .transition-smooth {
+    transition: var(--transition-smooth);
+  }
+
+  .transition-bounce {
+    transition: var(--transition-bounce);
+  }
+
+  /* 3D Transform effects */
+  .transform-3d {
+    transform-style: preserve-3d;
+    perspective: 1000px;
+  }
+
+  .card-3d {
+    transform: perspective(1000px) rotateX(0deg) rotateY(0deg);
+    transition: var(--transition-smooth);
+  }
+
+  .card-3d:hover {
+    transform: perspective(1000px) rotateX(-5deg) rotateY(5deg) translateZ(20px);
+  }
+
+  /* Enhanced Scroll animations */
+  .fade-in-up {
+    opacity: 0;
+    transform: translateY(60px);
+    transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .fade-in-up.animate {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .scale-on-scroll {
+    transform: scale(0.85) translateY(20px);
+    opacity: 0;
+    transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .scale-on-scroll.animate {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+
+  /* Smooth performance optimizations */
+  .transform-3d * {
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+  }
+}
