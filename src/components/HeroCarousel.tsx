@@ -32,7 +32,7 @@ const slides = [
     title: "Grow Your Wealth With Confidence",
     subtitle: "Expert Financial Guidance",
     description: "Partner with our experienced team to navigate the complexities of wealth management and investment.",
-    bgImage: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=2011&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    bgImage: "https://images.unsplash.com/photo-1614028674026-a65e31bfd27c?ixlib=rb-4.1.0&auto=format&fit=crop&w=2070&q=80",
     buttonText: "Contact Us",
     features: [
       "Market Analysis",
