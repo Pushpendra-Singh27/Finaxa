@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Navigation } from '@/components/Navigation';
 import { HeroCarousel } from '@/components/HeroCarousel';
 import { StatsSection } from '@/components/StatsSection';
@@ -9,8 +9,11 @@ import { Footer } from '@/components/Footer';
 import { InvestmentProducts } from '@/components/InvestmentProducts';
 import { AnimatedBackground } from '@/components/AnimatedBackground';
 import { ImageBackgroundSection } from '@/components/ImageBackgroundSection';
+import { BookMeetingPopup } from '@/components/BookMeetingPopup';
 
-const Index = () => {
+const Home = () => {
+  const [showPopup, setShowPopup] = useState(false);
+
   useEffect(() => {
     // Add scroll-triggered animations
     const observerOptions = {
@@ -43,8 +46,14 @@ const Index = () => {
     }
   }, []);
 
+  useEffect(() => {
+    const timer = setTimeout(() => setShowPopup(true), 7000);
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <AnimatedBackground>
+      <BookMeetingPopup open={showPopup} onClose={() => setShowPopup(false)} />
       <div className="min-h-screen flex flex-col">
         <Navigation />
         <main className="flex-grow bg-background overflow-x-hidden">
@@ -65,4 +74,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Home; 

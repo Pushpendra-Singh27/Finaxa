@@ -41,11 +41,11 @@ export const Navigation = () => {
   }, []);
 
   const navItems = [
-    { label: 'Platform', href: '#platform' },
-    { label: 'Services', href: '#services' },
+    { label: 'Home', href: '/' },
+    { label: 'About', href: '/about' },
+    { label: 'Services', href: '/services' },
     { label: 'Analytics', href: '#analytics' },
-    { label: 'Pricing', href: '#pricing' },
-    { label: 'About', href: '#about' }
+    { label: 'Pricing', href: '#pricing' }
   ];
 
   return (
@@ -57,7 +57,7 @@ export const Navigation = () => {
       <div className="container mx-auto px-6">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <a href="#" className="flex items-center space-x-2 group">
+          <a href="/" className="flex items-center space-x-2 group">
             <div className="w-8 h-8 gradient-primary rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
               <span className="text-primary-foreground font-bold text-sm">CC</span>
             </div>
