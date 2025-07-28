@@ -5,7 +5,7 @@ import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const slides = [
   {
-    title: "CELESTIA CAPITALS",
+    title: "CELESTIA CAPITALSssss",
     subtitle: "YOUR TRUSTED PARTNER IN FINANCIAL GROWTH",
     description: "Expert financial solutions tailored to help you achieve your investment goals and secure your financial future.",
     bgImage: "https://images.unsplash.com/photo-1462007895615-c8c073bebcd8?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
