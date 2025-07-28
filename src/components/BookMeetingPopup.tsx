@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import dubai2 from '@/assets/dubai2.jpg';
 import { FORM_CONFIG } from '@/config/form';
+import { testGoogleScript } from '@/utils/testGoogleScript';
 
 interface BookMeetingPopupProps {
   open: boolean;
@@ -33,6 +34,18 @@ export const BookMeetingPopup: React.FC<BookMeetingPopupProps> = ({ open, onClos
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [statusMessage, setStatusMessage] = useState('');
+
+  const handleTestConnection = async () => {
+    console.log('Testing Google Apps Script connection...');
+    const result = await testGoogleScript(FORM_CONFIG.GOOGLE_SCRIPT_URL);
+    console.log('Test result:', result);
+    
+    if (result.success) {
+      alert('✅ Connection test successful! Check console for details.');
+    } else {
+      alert('❌ Connection test failed: ' + result.error);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -70,6 +83,9 @@ export const BookMeetingPopup: React.FC<BookMeetingPopupProps> = ({ open, onClos
         return;
       }
       
+      console.log('Submitting to:', scriptUrl);
+      console.log('Form data:', form);
+      
       const response = await fetch(scriptUrl, {
         method: 'POST',
         headers: {
@@ -78,7 +94,27 @@ export const BookMeetingPopup: React.FC<BookMeetingPopupProps> = ({ open, onClos
         body: JSON.stringify(form),
       });
 
-      const result = await response.json();
+      console.log('Response status:', response.status);
+      console.log('Response headers:', response.headers);
+
+      // Check if response is ok
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      // Get response text first
+      const responseText = await response.text();
+      console.log('Response text:', responseText);
+
+      // Try to parse as JSON
+      let result;
+      try {
+        result = JSON.parse(responseText);
+      } catch (parseError) {
+        console.error('JSON parse error:', parseError);
+        console.error('Response text was:', responseText);
+        throw new Error('Invalid JSON response from server');
+      }
 
       if (result.success) {
         setSubmitStatus('success');
@@ -104,7 +140,17 @@ export const BookMeetingPopup: React.FC<BookMeetingPopupProps> = ({ open, onClos
     } catch (error) {
       console.error('Form submission error:', error);
       setSubmitStatus('error');
-      setStatusMessage('Network error. Please check your connection and try again.');
+      
+      // Provide more specific error messages
+      if (error.message.includes('Failed to fetch')) {
+        setStatusMessage('Network error. Please check your connection and try again.');
+      } else if (error.message.includes('Invalid JSON')) {
+        setStatusMessage('Server error. Please try again later or contact support.');
+      } else if (error.message.includes('HTTP error')) {
+        setStatusMessage('Server error. Please try again later.');
+      } else {
+        setStatusMessage('An unexpected error occurred. Please try again.');
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -224,6 +270,18 @@ export const BookMeetingPopup: React.FC<BookMeetingPopupProps> = ({ open, onClos
                 disabled={isSubmitting}
               />
             </div>
+            
+            {/* Test Connection Button (for debugging) */}
+            {FORM_CONFIG.GOOGLE_SCRIPT_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL' && (
+              <button
+                type="button"
+                onClick={handleTestConnection}
+                className="w-full py-2 px-4 bg-gray-600 text-white font-semibold rounded-lg hover:bg-gray-700 transition-all text-sm"
+              >
+                Test Connection
+              </button>
+            )}
+            
             <button
               type="submit"
               disabled={isSubmitting}
