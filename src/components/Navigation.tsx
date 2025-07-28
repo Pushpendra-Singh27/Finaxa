@@ -72,7 +72,7 @@ export const Navigation = () => {
               <a 
                 key={item.label}
                 href={item.href}
-                className="text-foreground/80 hover:text-foreground transition-smooth relative group"
+                className="text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-smooth relative group"
               >
                 {item.label}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300"></span>
@@ -110,7 +110,7 @@ export const Navigation = () => {
 
           {/* Mobile Menu Button */}
           <button 
-            className="md:hidden p-2 text-foreground"
+            className="md:hidden p-2 text-gray-900 dark:text-white"
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
@@ -125,7 +125,7 @@ export const Navigation = () => {
                 <a 
                   key={item.label}
                   href={item.href}
-                  className="block text-foreground/80 hover:text-foreground transition-smooth py-2"
+                  className="block text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-smooth py-2"
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {item.label}

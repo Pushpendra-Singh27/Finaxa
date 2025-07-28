@@ -261,26 +261,29 @@ export const HeroCarousel = () => {
             className="w-full h-full flex items-center justify-center"
           >
             <div className="w-full max-w-7xl mx-auto px-6 relative z-10">
-              <div className="w-full max-w-4xl mx-auto text-center space-y-8 px-4">
+              <div className="w-full max-w-4xl mx-auto text-center space-y-8 px-4 hero-text-white">
                 <motion.div variants={fadeInUp} className="text-center">
                   <motion.div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
                     <motion.h1 
                       variants={fadeInUp}
-                      className={`${responsiveText.title} font-bold ${spacing.title} text-white drop-shadow-lg leading-tight max-w-4xl mx-auto`}
+                      className={`${responsiveText.title} font-bold ${spacing.title} !text-white drop-shadow-lg leading-tight max-w-4xl mx-auto`}
+                      style={{ color: 'white' }}
                     >
                       {slides[currentSlide].title}
                     </motion.h1>
                     
                     <motion.h2 
                       variants={fadeInUp}
-                      className={`${responsiveText.subtitle} font-medium text-blue-200 ${spacing.subtitle} drop-shadow`}
+                      className={`${responsiveText.subtitle} font-medium !text-white ${spacing.subtitle} drop-shadow`}
+                      style={{ color: 'white' }}
                     >
                       {slides[currentSlide].subtitle}
                     </motion.h2>
                     
                     <motion.p 
                       variants={fadeInUp}
-                      className={`${responsiveText.description} text-white/90 max-w-2xl mx-auto leading-relaxed ${spacing.description} drop-shadow-md`}
+                      className={`${responsiveText.description} !text-white max-w-2xl mx-auto leading-relaxed ${spacing.description} drop-shadow-md`}
+                      style={{ color: 'white' }}
                     >
                       {slides[currentSlide].description}
                     </motion.p>
@@ -307,7 +310,7 @@ export const HeroCarousel = () => {
                       }}
                     >
                       <div className="w-2 h-2 flex-shrink-0 rounded-full bg-blue-400" />
-                      <span className={`${responsiveText.feature} font-medium text-white/90`}>{feature}</span>
+                      <span className={`${responsiveText.feature} font-medium !text-white`} style={{ color: 'white' }}>{feature}</span>
                     </motion.li>
                   ))}
                   </motion.ul>
