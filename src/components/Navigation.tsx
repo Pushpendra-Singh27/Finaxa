@@ -61,7 +61,7 @@ export const Navigation = () => {
             <div className="w-8 h-8 gradient-primary rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
               <span className="text-primary-foreground font-bold text-sm">CC</span>
             </div>
-            <span className="text-xl font-bold gradient-primary bg-clip-text text-transparent">
+            <span className={`text-xl font-bold ${isScrolled ? 'text-gray-900 dark:text-white' : 'text-white'}`}>
               Celestia Capitals
             </span>
           </a>
@@ -72,7 +72,7 @@ export const Navigation = () => {
               <a 
                 key={item.label}
                 href={item.href}
-                className="text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-smooth relative group"
+                className={`${isScrolled ? 'text-gray-900 dark:text-white' : 'text-white'} hover:text-blue-300 transition-smooth relative group`}
               >
                 {item.label}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300"></span>
@@ -110,7 +110,7 @@ export const Navigation = () => {
 
           {/* Mobile Menu Button */}
           <button 
-            className="md:hidden p-2 text-gray-900 dark:text-white"
+            className={`md:hidden p-2 ${isScrolled ? 'text-gray-900 dark:text-white' : 'text-white'}`}
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           >
             {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
