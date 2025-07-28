@@ -5,7 +5,7 @@ import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const slides = [
   {
-    title: "FINAXA INVESTMENT",
+    title: "CELESTIA CAPITALS",
     subtitle: "YOUR TRUSTED PARTNER IN FINANCIAL GROWTH",
     description: "Expert financial solutions tailored to help you achieve your investment goals and secure your financial future.",
     bgImage: "https://images.unsplash.com/photo-1462007895615-c8c073bebcd8?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -198,7 +198,15 @@ export const HeroCarousel = () => {
 
       {/* Floating 3D Elements */}
       {[1, 2, 3, 4, 5].map((i) => {
-        const size = 50 + i * 30;
+        // Responsive size classes for each triangle
+        const sizeClassesArr = [
+          'w-8 h-8 sm:w-16 sm:h-16 md:w-24 md:h-24',
+          'w-10 h-10 sm:w-20 sm:h-20 md:w-28 md:h-28',
+          'w-12 h-12 sm:w-24 sm:h-24 md:w-32 md:h-32',
+          'w-9 h-9 sm:w-18 sm:h-18 md:w-24 md:h-24',
+          'w-7 h-7 sm:w-14 sm:h-14 md:w-20 md:h-20',
+        ];
+        const sizeClass = sizeClassesArr[i - 1] || 'w-8 h-8 sm:w-16 sm:h-16 md:w-24 md:h-24';
         const depth = i * 0.5;
         return (
           <motion.div
@@ -206,8 +214,6 @@ export const HeroCarousel = () => {
             style={{
               x: mousePosition.x * (i * 15),
               y: mousePosition.y * (i * 15),
-              width: `${size}px`,
-              height: `${size}px`,
               rotate: i * 36,
               transformStyle: 'preserve-3d',
               transform: `translateZ(${depth}px)`,
@@ -215,7 +221,7 @@ export const HeroCarousel = () => {
             }}
             className={`absolute rounded-lg filter backdrop-blur-sm ${
               i % 2 === 0 ? 'bg-blue-500/30' : 'bg-indigo-500/30'
-            } border border-white/10 shadow-lg`}
+            } border border-white/10 shadow-lg ${sizeClass}`}
             animate={{
               y: [0, -30, 0],
               rotate: i * 36 + 360,

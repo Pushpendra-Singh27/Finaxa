@@ -25,10 +25,10 @@ const NotFound = () => {
   return (
     <>
       <Helmet>
-        <title>Page Not Found | Finaxa Investments</title>
+        <title>Page Not Found | Celestia Capitals</title>
         <meta name="robots" content="noindex, follow" />
-        <meta name="description" content="The page you're looking for doesn't exist or has been moved. Return to Finaxa Investments' homepage for expert wealth management solutions." />
-        <link rel="canonical" href={`https://finaxa.com${location.pathname}`} />
+        <meta name="description" content="The page you're looking for doesn't exist or has been moved. Return to Celestia Capitals' homepage for expert wealth management solutions." />
+        <link rel="canonical" href={`https://celestiacapitals.com${location.pathname}`} />
       </Helmet>
       
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 px-4">

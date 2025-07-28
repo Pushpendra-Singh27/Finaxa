@@ -59,10 +59,10 @@ export const Navigation = () => {
           {/* Logo */}
           <a href="#" className="flex items-center space-x-2 group">
             <div className="w-8 h-8 gradient-primary rounded-lg flex items-center justify-center group-hover:scale-110 transition-transform">
-              <span className="text-primary-foreground font-bold text-sm">DF</span>
+              <span className="text-primary-foreground font-bold text-sm">CC</span>
             </div>
             <span className="text-xl font-bold gradient-primary bg-clip-text text-transparent">
-              DeepFinance
+              Celestia Capitals
             </span>
           </a>
 
