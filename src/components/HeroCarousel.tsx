@@ -20,7 +20,7 @@ const slides = [
     title: "Personalized Investment Strategies",
     subtitle: "Tailored to Your Financial Goals",
     description: "Our expert advisors create customized investment plans designed to maximize returns while managing risk.",
-    bgImage: "/src/assets/man-suit-is-holding-tablet-front-car-with-graph-it.jpg",
+    bgImage: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     buttonText: "Learn More",
     features: [
       "Retirement Planning",
@@ -32,7 +32,7 @@ const slides = [
     title: "Grow Your Wealth With Confidence",
     subtitle: "Expert Financial Guidance",
     description: "Partner with our experienced team to navigate the complexities of wealth management and investment.",
-    bgImage: "/src/assets/representation-user-experience-interface-design.jpg",
+    bgImage: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?q=80&w=2011&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     buttonText: "Contact Us",
     features: [
       "Market Analysis",
