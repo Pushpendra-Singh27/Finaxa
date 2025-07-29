@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence, useMotionValue } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
+import videoFile from '../assets/8396910-uhd_2560_1440_25fps.mp4';
 
 const slides = [
   {
@@ -9,6 +10,7 @@ const slides = [
     subtitle: "YOUR TRUSTED PARTNER IN FINANCIAL GROWTH",
     description: "Expert financial solutions tailored to help you achieve your investment goals and secure your financial future.",
     bgImage: "https://images.unsplash.com/photo-1462007895615-c8c073bebcd8?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    video: videoFile,
     buttonText: "Get Started",
     features: [
       "Investment Management",
@@ -46,6 +48,7 @@ export const HeroCarousel = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const containerRef = useRef<HTMLDivElement>(null);
+  const videoRef = useRef<HTMLVideoElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ["start start", "end start"]
@@ -59,9 +62,22 @@ export const HeroCarousel = () => {
     return () => clearInterval(interval);
   }, []);
 
+  // Handle video playback when slide changes
+  useEffect(() => {
+    if (videoRef.current && slides[currentSlide].video) {
+      videoRef.current.currentTime = 0;
+      videoRef.current.play().catch(console.error);
+    }
+  }, [currentSlide]);
+
   // Use the bgImage from each slide for the background
   const getCurrentBackground = () => {
     return slides[currentSlide].bgImage;
+  };
+
+  // Check if current slide has video
+  const hasVideo = () => {
+    return slides[currentSlide].video;
   };
 
   // Mouse move effect for background parallax only
@@ -171,27 +187,64 @@ export const HeroCarousel = () => {
           className="absolute inset-0 overflow-hidden"
         >
           <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/60 to-black/70 z-10" />
-          <motion.div 
-            className="absolute inset-0"
-            style={{
-              backgroundImage: `url(${getCurrentBackground()})`,
-              backgroundSize: 'cover',
-              backgroundPosition: 'center',
-              scale: 1.1,
-              transition: 'opacity 1s ease-in-out',
-              opacity: 1
-            }}
-            animate={{
-              x: [0, 50, 0],
-              y: [0, 30, 0],
-              transition: {
-                duration: 30,
-                repeat: Infinity,
-                repeatType: 'reverse',
-                ease: 'easeInOut'
-              }
-            }}
-          />
+          
+          {/* Video Background for first slide */}
+          {hasVideo() ? (
+            <motion.div 
+              className="absolute inset-0"
+              style={{
+                scale: 1.1,
+                transition: 'opacity 1s ease-in-out',
+                opacity: 1
+              }}
+              animate={{
+                x: [0, 50, 0],
+                y: [0, 30, 0],
+                transition: {
+                  duration: 30,
+                  repeat: Infinity,
+                  repeatType: 'reverse',
+                  ease: 'easeInOut'
+                }
+              }}
+            >
+              <video
+                ref={videoRef}
+                className="absolute inset-0 w-full h-full object-cover"
+                autoPlay
+                muted
+                loop
+                playsInline
+                style={{ objectPosition: 'center' }}
+              >
+                <source src={slides[currentSlide].video} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+            </motion.div>
+          ) : (
+            <motion.div 
+              className="absolute inset-0"
+              style={{
+                backgroundImage: `url(${getCurrentBackground()})`,
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                scale: 1.1,
+                transition: 'opacity 1s ease-in-out',
+                opacity: 1
+              }}
+              animate={{
+                x: [0, 50, 0],
+                y: [0, 30, 0],
+                transition: {
+                  duration: 30,
+                  repeat: Infinity,
+                  repeatType: 'reverse',
+                  ease: 'easeInOut'
+                }
+              }}
+            />
+          )}
+          
           <div className="absolute inset-0 bg-grid-pattern opacity-10 z-20" />
         </motion.div>
       </motion.div>

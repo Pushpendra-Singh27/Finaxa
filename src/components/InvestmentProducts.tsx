@@ -1,37 +1,44 @@
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, useTransform } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
-import { Plane, Home, BarChart3, Check } from 'lucide-react';
+import { Plane, Home, BarChart3, Check, ArrowRight } from 'lucide-react';
+import { useState } from 'react';
 
 const investments = [
   {
     id: 1,
     title: 'Investment in Aviation',
-    amount: 'AED 250,000',
-    roi: '26%',
-    minInvestment: 'AED 250,000',
+    amount: 'AED 200,000',
+    roi: '25%',
+    minInvestment: 'AED 200,000',
     period: '2 years',
     approved: true,
-    icon: <Plane className="w-8 h-8 text-blue-500" />
+    bonus: '6%',
+    specialBenefit: 'Discounted rate on flying hours',
+    icon: <Plane className="w-6 h-6 sm:w-8 sm:h-8 text-blue-500" />,
+    bgImage: 'https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
   },
   {
     id: 2,
     title: 'Investment in Real Estate',
-    amount: 'AED 2,000,000',
-    roi: '20%',
-    minInvestment: 'AED 2,000,000',
+    amount: 'AED 150,000',
+    roi: '22%',
+    minInvestment: 'AED 150,000',
     period: '5 years',
     approved: true,
-    icon: <Home className="w-8 h-8 text-green-500" />
+    icon: <Home className="w-6 h-6 sm:w-8 sm:h-8 text-green-500" />,
+    bgImage: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=2073&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
   },
   {
     id: 3,
     title: 'Investment in Commodities',
     amount: 'AED 100,000',
-    roi: '32%',
+    roi: '36%',
     minInvestment: 'AED 100,000',
     period: '1 year',
     approved: true,
-    icon: <BarChart3 className="w-8 h-8 text-amber-500" />
+    bonus: '6%',
+    icon: <BarChart3 className="w-6 h-6 sm:w-8 sm:h-8 text-amber-500" />,
+    bgImage: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
   }
 ];
 
@@ -40,39 +47,56 @@ const container = {
   show: {
     opacity: 1,
     transition: {
-      staggerChildren: 0.1,
-      delayChildren: 0.2,
+      staggerChildren: 0.2,
+      delayChildren: 0.1,
     },
   },
 };
 
 const item = {
-  hidden: { opacity: 0, y: 20 },
+  hidden: { opacity: 0, y: 30 },
   show: {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.5,
+      duration: 0.6,
       ease: [0.16, 1, 0.3, 1],
     },
   },
 };
 
 export const InvestmentProducts = () => {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [clickedIndex, setClickedIndex] = useState<number | null>(null);
+
+  // Handle both hover and click states
+  const isExpanded = (index: number) => {
+    return hoveredIndex === index || clickedIndex === index;
+  };
+
+  // Handle click/tap for mobile
+  const handleTileClick = (index: number) => {
+    if (clickedIndex === index) {
+      setClickedIndex(null); // Close if already open
+    } else {
+      setClickedIndex(index); // Open this tile
+    }
+  };
+
   return (
-    <section className="py-16 md:py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-950">
-      <div className="container mx-auto px-4">
+    <section className="py-8 sm:py-12 md:py-16 lg:py-20 xl:py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-950">
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
-          className="text-center mb-16"
+          className="text-center mb-8 sm:mb-12 md:mb-16"
         >
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-4">
             Investment Products
           </h2>
-          <p className="text-lg text-gray-600 dark:text-gray-300 max-w-3xl mx-auto">
+          <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto px-4">
             Explore our exclusive investment opportunities across various high-growth sectors
           </p>
         </motion.div>
@@ -82,49 +106,243 @@ export const InvestmentProducts = () => {
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          className="space-y-6 sm:space-y-8 md:space-y-10 lg:space-y-12 max-w-4xl lg:max-w-6xl mx-auto"
         >
-          {investments.map((investment) => (
-            <motion.div key={investment.id} variants={item}>
-              <Card className="h-full group hover:shadow-xl transition-shadow duration-300 bg-white dark:bg-gray-800 border border-gray-100 dark:border-gray-700 overflow-hidden">
-                <div className="p-1 bg-gradient-to-r from-blue-500 to-purple-600">
-                  <div className="bg-white dark:bg-gray-800 p-6 rounded-t-lg">
-                    <div className="flex items-center justify-between mb-4">
-                      <div className="p-3 rounded-full bg-blue-50 dark:bg-gray-700">
+          {investments.map((investment, index) => (
+            <motion.div 
+              key={investment.id} 
+              variants={item}
+              className="group"
+              onHoverStart={() => setHoveredIndex(index)}
+              onHoverEnd={() => setHoveredIndex(null)}
+              onClick={() => handleTileClick(index)}
+            >
+              <motion.div
+                className="relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-xl sm:shadow-2xl hover:shadow-2xl sm:hover:shadow-3xl transition-all duration-500 cursor-pointer"
+                animate={{
+                  height: isExpanded(index) ? (investment.bonus ? 800 : 700) : 200,
+                  scale: isExpanded(index) ? 1.02 : 1,
+                }}
+                transition={{ 
+                  duration: 0.4, 
+                  ease: [0.25, 0.46, 0.45, 0.94]
+                }}
+              >
+                {/* Background Image with Gradient Overlay */}
+                <div 
+                  className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                  style={{ backgroundImage: `url(${investment.bgImage})` }}
+                />
+                <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40" />
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/80" />
+
+                {/* Initial State - Compact View */}
+                <div className="relative z-10 p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12 flex items-center justify-between h-[200px]">
+                  <div className="flex items-center space-x-3 sm:space-x-4 md:space-x-6">
+                    <div className="p-2 sm:p-3 md:p-4 rounded-xl sm:rounded-2xl bg-white/20 backdrop-blur-sm border border-white/30">
                         {investment.icon}
-                      </div>
-                      <span className="px-3 py-1 text-sm font-medium rounded-full bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">
-                        {investment.roi} ROI
-                      </span>
                     </div>
-                    <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                    <div>
+                      <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white mb-1 sm:mb-2">
                       {investment.title}
                     </h3>
-                    <p className="text-2xl font-bold text-blue-600 dark:text-blue-400 mb-4">
-                      {investment.amount}
-                    </p>
+                      <p className="text-xs sm:text-sm md:text-base lg:text-lg text-white/80">
+                        Investment Opportunity
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center space-x-3 sm:space-x-4 md:space-x-6">
+                    <span className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-sm sm:text-base md:text-lg font-bold rounded-full bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-lg">
+                      Upto {investment.roi} ROI
+                    </span>
+                    <motion.div
+                      className="p-2 sm:p-3 rounded-full bg-white/20 backdrop-blur-sm border border-white/30"
+                      animate={{ rotate: isExpanded(index) ? 90 : 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <ArrowRight className="w-4 h-4 sm:w-5 sm:h-5 md:w-6 md:h-6 text-white" />
+                    </motion.div>
                   </div>
                 </div>
-                <CardContent className="p-6">
-                  <ul className="space-y-3">
-                    <li className="flex items-center text-gray-700 dark:text-gray-300">
-                      <Check className="w-5 h-5 text-green-500 mr-2" />
-                      <span>Min. Investment: <span className="font-medium">{investment.minInvestment}</span></span>
-                    </li>
-                    <li className="flex items-center text-gray-700 dark:text-gray-300">
-                      <Check className="w-5 h-5 text-green-500 mr-2" />
-                      <span>Period: <span className="font-medium">{investment.period}</span></span>
-                    </li>
-                    <li className="flex items-center text-gray-700 dark:text-gray-300">
-                      <Check className="w-5 h-5 text-green-500 mr-2" />
-                      <span>Status: <span className="font-medium">{investment.approved ? 'Approved' : 'Pending'}</span></span>
-                    </li>
-                  </ul>
-                  <button className="mt-6 w-full py-3 px-6 rounded-lg bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white font-medium transition-all duration-300 transform hover:-translate-y-0.5">
+
+                {/* Expanded State - Full Information */}
+                <motion.div
+                  className="relative z-10 px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12 pb-4 sm:pb-6 md:pb-8 lg:pb-10 xl:pb-12"
+                  animate={{
+                    opacity: isExpanded(index) ? 1 : 0,
+                    y: isExpanded(index) ? 0 : 20,
+                  }}
+                  transition={{ 
+                    duration: 0.3, 
+                    delay: isExpanded(index) ? 0.1 : 0,
+                    ease: "easeOut"
+                  }}
+                >
+                  <div className="border-t border-white/20 pt-4 sm:pt-6 md:pt-8">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
+                      <div>
+                        <h4 className="text-base sm:text-lg md:text-xl font-semibold text-white mb-3 sm:mb-4 md:mb-6">
+                          Investment Details
+                        </h4>
+                        <div className="space-y-2 sm:space-y-3 md:space-y-4">
+                          <motion.div 
+                            className="flex items-center justify-between p-3 sm:p-4 rounded-lg sm:rounded-xl bg-white/10 backdrop-blur-sm border border-white/20"
+                            animate={{ 
+                              opacity: isExpanded(index) ? 1 : 0,
+                              x: isExpanded(index) ? 0 : -20 
+                            }}
+                            transition={{ duration: 0.3, delay: 0.2 }}
+                          >
+                            <span className="text-xs sm:text-sm md:text-base text-white/80">Investment Amount:</span>
+                            <span className="font-semibold text-blue-300 text-xs sm:text-sm md:text-base">
+                              {investment.amount}
+                            </span>
+                          </motion.div>
+                          <motion.div 
+                            className="flex items-center justify-between p-3 sm:p-4 rounded-lg sm:rounded-xl bg-white/10 backdrop-blur-sm border border-white/20"
+                            animate={{ 
+                              opacity: isExpanded(index) ? 1 : 0,
+                              x: isExpanded(index) ? 0 : -20 
+                            }}
+                            transition={{ duration: 0.3, delay: 0.25 }}
+                          >
+                            <span className="text-xs sm:text-sm md:text-base text-white/80">Min. Investment:</span>
+                            <span className="font-semibold text-white text-xs sm:text-sm md:text-base">
+                              {investment.minInvestment}
+                            </span>
+                          </motion.div>
+                          <motion.div 
+                            className="flex items-center justify-between p-3 sm:p-4 rounded-lg sm:rounded-xl bg-white/10 backdrop-blur-sm border border-white/20"
+                            animate={{ 
+                              opacity: isExpanded(index) ? 1 : 0,
+                              x: isExpanded(index) ? 0 : -20 
+                            }}
+                            transition={{ duration: 0.3, delay: 0.3 }}
+                          >
+                            <span className="text-xs sm:text-sm md:text-base text-white/80">Period:</span>
+                            <span className="font-semibold text-white text-xs sm:text-sm md:text-base">
+                              {investment.period}
+                            </span>
+                          </motion.div>
+                          <motion.div 
+                            className="flex items-center justify-between p-3 sm:p-4 rounded-lg sm:rounded-xl bg-white/10 backdrop-blur-sm border border-white/20"
+                            animate={{ 
+                              opacity: isExpanded(index) ? 1 : 0,
+                              x: isExpanded(index) ? 0 : -20 
+                            }}
+                            transition={{ duration: 0.3, delay: 0.35 }}
+                          >
+                            <span className="text-xs sm:text-sm md:text-base text-white/80">Status:</span>
+                            <span className="flex items-center">
+                              <Check className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-green-400 mr-2" />
+                              <span className="font-semibold text-green-400 text-xs sm:text-sm md:text-base">
+                                {investment.approved ? 'Approved' : 'Pending'}
+                              </span>
+                            </span>
+                          </motion.div>
+                          {investment.bonus && (
+                            <>
+                              <motion.div 
+                                className="flex items-center justify-between p-3 sm:p-4 rounded-lg sm:rounded-xl bg-gradient-to-r from-yellow-500/20 to-orange-500/20 backdrop-blur-sm border border-yellow-400/30"
+                                animate={{ 
+                                  opacity: isExpanded(index) ? 1 : 0,
+                                  x: isExpanded(index) ? 0 : -20 
+                                }}
+                                transition={{ duration: 0.3, delay: 0.4 }}
+                              >
+                                <span className="text-xs sm:text-sm md:text-base text-white/90">Bonus after period:</span>
+                                <span className="font-semibold text-yellow-300 text-xs sm:text-sm md:text-base">
+                                  Upto {investment.bonus}
+                                </span>
+                              </motion.div>
+                              <motion.div 
+                                className="p-3 sm:p-4 rounded-lg sm:rounded-xl bg-gradient-to-r from-yellow-500/10 to-orange-500/10 backdrop-blur-sm border border-yellow-400/20"
+                                animate={{ 
+                                  opacity: isExpanded(index) ? 1 : 0,
+                                  x: isExpanded(index) ? 0 : -20 
+                                }}
+                                transition={{ duration: 0.3, delay: 0.45 }}
+                              >
+                                <div className="text-xs sm:text-sm text-white/80 space-y-1">
+                                  <div className="flex items-center">
+                                    <Check className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-400 mr-2 flex-shrink-0" />
+                                    <span>Applicable on long term contract</span>
+                                  </div>
+                                  <div className="flex items-center">
+                                    <Check className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-400 mr-2 flex-shrink-0" />
+                                    <span>Lock-in period: 2 years to be entitled for bonus</span>
+                                  </div>
+                                </div>
+                              </motion.div>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                      
+                      <div className="flex flex-col justify-between">
+                        <div>
+                          <h4 className="text-base sm:text-lg md:text-xl font-semibold text-white mb-3 sm:mb-4 md:mb-6">
+                            Key Benefits
+                          </h4>
+                          <div className="space-y-2 sm:space-y-3">
+                            {[
+                              "High potential returns",
+                              "Diversified portfolio", 
+                              "Professional management",
+                              "Regular reporting"
+                            ].map((benefit, benefitIndex) => (
+                              <motion.div 
+                                key={benefitIndex}
+                                className="flex items-center p-2 sm:p-3 rounded-lg sm:rounded-xl bg-white/10 backdrop-blur-sm border border-white/20"
+                                animate={{ 
+                                  opacity: isExpanded(index) ? 1 : 0,
+                                  x: isExpanded(index) ? 0 : 20 
+                                }}
+                                transition={{ 
+                                  duration: 0.3, 
+                                  delay: 0.2 + (benefitIndex * 0.05) 
+                                }}
+                              >
+                                <Check className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-green-400 mr-2 sm:mr-3 flex-shrink-0" />
+                                <span className="text-xs sm:text-sm md:text-base text-white/90">{benefit}</span>
+                              </motion.div>
+                            ))}
+                            {investment.specialBenefit && (
+                              <motion.div 
+                                className="flex items-center p-2 sm:p-3 rounded-lg sm:rounded-xl bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-sm border border-blue-400/30"
+                                animate={{ 
+                                  opacity: isExpanded(index) ? 1 : 0,
+                                  x: isExpanded(index) ? 0 : 20 
+                                }}
+                                transition={{ 
+                                  duration: 0.3, 
+                                  delay: 0.4 
+                                }}
+                              >
+                                <Check className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-blue-400 mr-2 sm:mr-3 flex-shrink-0" />
+                                <span className="text-xs sm:text-sm md:text-base text-white/90 font-medium">{investment.specialBenefit}</span>
+                              </motion.div>
+                            )}
+                          </div>
+                        </div>
+                        
+                        <motion.button 
+                          className="mt-4 sm:mt-6 md:mt-8 w-full py-2 sm:py-3 md:py-4 px-4 sm:px-6 md:px-8 rounded-lg sm:rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold text-sm sm:text-base md:text-lg transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg"
+                          animate={{ 
+                            opacity: isExpanded(index) ? 1 : 0,
+                            y: isExpanded(index) ? 0 : 20 
+                          }}
+                          transition={{ duration: 0.3, delay: 0.4 }}
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                        >
                     Invest Now
-                  </button>
-                </CardContent>
-              </Card>
+                        </motion.button>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              </motion.div>
             </motion.div>
           ))}
         </motion.div>
