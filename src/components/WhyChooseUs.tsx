@@ -1,10 +1,327 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useState, useRef } from 'react';
-import { TrendingUp, Shield, Lock, Users, Globe, BarChart3, Star, ArrowRight } from 'lucide-react';
+import { Star, ArrowRight } from 'lucide-react';
+
+// Custom Animated Icons for Why Choose Us Section
+const AnimatedTrendingIcon = () => (
+  <motion.svg
+    width="32"
+    height="32"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className="w-8 h-8"
+  >
+    <motion.polyline
+      points="22,12 18,12 15,21 9,3 6,12 2,12"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      initial={{ pathLength: 0 }}
+      animate={{ pathLength: 1 }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
+    />
+    <motion.circle
+      cx="18"
+      cy="12"
+      r="2"
+      fill="currentColor"
+      initial={{ scale: 0 }}
+      animate={{ scale: [0, 1.2, 1] }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1, delay: 0.5 }}
+    />
+    <motion.circle
+      cx="6"
+      cy="12"
+      r="2"
+      fill="currentColor"
+      initial={{ scale: 0 }}
+      animate={{ scale: [0, 1.2, 1] }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1, delay: 1 }}
+    />
+    <motion.circle
+      cx="15"
+      cy="21"
+      r="1.5"
+      fill="currentColor"
+      initial={{ scale: 0 }}
+      animate={{ scale: [0, 1.2, 1] }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1, delay: 1.5 }}
+    />
+  </motion.svg>
+);
+
+const AnimatedShieldIcon = () => (
+  <motion.svg
+    width="32"
+    height="32"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className="w-8 h-8"
+  >
+    <motion.path
+      d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      initial={{ pathLength: 0 }}
+      animate={{ pathLength: 1 }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
+    />
+    <motion.path
+      d="M9 12l2 2 4-4"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      initial={{ pathLength: 0 }}
+      animate={{ pathLength: 1 }}
+      transition={{ duration: 1.5, repeat: Infinity, repeatDelay: 1, delay: 0.5 }}
+    />
+    <motion.circle
+      cx="12"
+      cy="12"
+      r="3"
+      stroke="currentColor"
+      strokeWidth="1"
+      fill="none"
+      initial={{ scale: 0, opacity: 0 }}
+      animate={{ scale: [0, 1.2, 1], opacity: [0, 1, 0] }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
+    />
+  </motion.svg>
+);
+
+const AnimatedLockIcon = () => (
+  <motion.svg
+    width="32"
+    height="32"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className="w-8 h-8"
+  >
+    <motion.rect
+      x="3"
+      y="11"
+      width="18"
+      height="11"
+      rx="2"
+      ry="2"
+      stroke="currentColor"
+      strokeWidth="2"
+      initial={{ pathLength: 0 }}
+      animate={{ pathLength: 1 }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
+    />
+    <motion.circle
+      cx="12"
+      cy="7"
+      r="4"
+      stroke="currentColor"
+      strokeWidth="2"
+      initial={{ pathLength: 0 }}
+      animate={{ pathLength: 1 }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1, delay: 0.3 }}
+    />
+    <motion.path
+      d="M8 11V7a4 4 0 0 1 8 0v4"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      initial={{ pathLength: 0 }}
+      animate={{ pathLength: 1 }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1, delay: 0.6 }}
+    />
+    <motion.circle
+      cx="12"
+      cy="16"
+      r="1"
+      fill="currentColor"
+      initial={{ scale: 0 }}
+      animate={{ scale: [0, 1.2, 1] }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
+    />
+  </motion.svg>
+);
+
+const AnimatedUsersIcon = () => (
+  <motion.svg
+    width="32"
+    height="32"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className="w-8 h-8"
+  >
+    <motion.path
+      d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      initial={{ pathLength: 0 }}
+      animate={{ pathLength: 1 }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
+    />
+    <motion.circle
+      cx="9"
+      cy="7"
+      r="4"
+      stroke="currentColor"
+      strokeWidth="2"
+      initial={{ pathLength: 0 }}
+      animate={{ pathLength: 1 }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1, delay: 0.3 }}
+    />
+    <motion.path
+      d="M22 21v-2a4 4 0 0 0-3-3.87"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      initial={{ pathLength: 0 }}
+      animate={{ pathLength: 1 }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1, delay: 0.6 }}
+    />
+    <motion.path
+      d="M16 3.13a4 4 0 0 1 0 7.75"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      initial={{ pathLength: 0 }}
+      animate={{ pathLength: 1 }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1, delay: 0.9 }}
+    />
+    <motion.circle
+      cx="12"
+      cy="12"
+      r="1"
+      fill="currentColor"
+      initial={{ scale: 0 }}
+      animate={{ scale: [0, 1.2, 1] }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1, delay: 1.2 }}
+    />
+  </motion.svg>
+);
+
+const AnimatedGlobeIcon = () => (
+  <motion.svg
+    width="32"
+    height="32"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className="w-8 h-8"
+  >
+    <motion.circle
+      cx="12"
+      cy="12"
+      r="10"
+      stroke="currentColor"
+      strokeWidth="2"
+      initial={{ pathLength: 0 }}
+      animate={{ pathLength: 1 }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
+    />
+    <motion.path
+      d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
+      stroke="currentColor"
+      strokeWidth="2"
+      initial={{ pathLength: 0 }}
+      animate={{ pathLength: 1 }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1, delay: 0.3 }}
+    />
+    <motion.circle
+      cx="12"
+      cy="12"
+      r="3"
+      fill="currentColor"
+      initial={{ scale: 0 }}
+      animate={{ scale: [0, 1.2, 1] }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
+    />
+    <motion.path
+      d="M12 2v20M2 12h20"
+      stroke="currentColor"
+      strokeWidth="1"
+      strokeDasharray="2 2"
+      initial={{ pathLength: 0 }}
+      animate={{ pathLength: 1 }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1, delay: 0.6 }}
+    />
+  </motion.svg>
+);
+
+const AnimatedBarChartIcon = () => (
+  <motion.svg
+    width="32"
+    height="32"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className="w-8 h-8"
+  >
+    <motion.path
+      d="M12 20V10M18 20V4M6 20v-6"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      initial={{ pathLength: 0 }}
+      animate={{ pathLength: 1 }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
+    />
+    <motion.rect
+      x="4"
+      y="14"
+      width="4"
+      height="6"
+      fill="currentColor"
+      initial={{ scaleY: 0 }}
+      animate={{ scaleY: [0, 1.2, 1] }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1, delay: 0.3 }}
+    />
+    <motion.rect
+      x="10"
+      y="10"
+      width="4"
+      height="10"
+      fill="currentColor"
+      initial={{ scaleY: 0 }}
+      animate={{ scaleY: [0, 1.2, 1] }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1, delay: 0.6 }}
+    />
+    <motion.rect
+      x="16"
+      y="4"
+      width="4"
+      height="16"
+      fill="currentColor"
+      initial={{ scaleY: 0 }}
+      animate={{ scaleY: [0, 1.2, 1] }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1, delay: 0.9 }}
+    />
+    <motion.circle
+      cx="6"
+      cy="17"
+      r="1"
+      fill="currentColor"
+      initial={{ scale: 0 }}
+      animate={{ scale: [0, 1.2, 1] }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1, delay: 1.2 }}
+    />
+  </motion.svg>
+);
 
 const benefits = [
   {
-    icon: <TrendingUp className="w-8 h-8" />,
+    icon: <AnimatedTrendingIcon />,
     title: "Returns up to 36% Annually",
     description: "Experience exceptional returns with our carefully curated investment opportunities across high-growth sectors.",
     gradient: "from-green-500 to-emerald-500",
@@ -13,7 +330,7 @@ const benefits = [
     iconColor: "text-green-500"
   },
   {
-    icon: <Shield className="w-8 h-8" />,
+    icon: <AnimatedShieldIcon />,
     title: "100% Legally Structured & Transparent",
     description: "All investments are fully compliant with regulatory requirements and offer complete transparency.",
     gradient: "from-blue-500 to-cyan-500",
@@ -22,7 +339,7 @@ const benefits = [
     iconColor: "text-blue-500"
   },
   {
-    icon: <Lock className="w-8 h-8" />,
+    icon: <AnimatedLockIcon />,
     title: "Secure, Asset-Backed Opportunities",
     description: "Every investment is backed by tangible assets, providing security and peace of mind.",
     gradient: "from-purple-500 to-pink-500",
@@ -31,7 +348,7 @@ const benefits = [
     iconColor: "text-purple-500"
   },
   {
-    icon: <Users className="w-8 h-8" />,
+    icon: <AnimatedUsersIcon />,
     title: "Dedicated Investment Advisors",
     description: "Get personalized guidance from our team of experienced investment professionals.",
     gradient: "from-orange-500 to-red-500",
@@ -40,7 +357,7 @@ const benefits = [
     iconColor: "text-orange-500"
   },
   {
-    icon: <Globe className="w-8 h-8" />,
+    icon: <AnimatedGlobeIcon />,
     title: "Global Portfolio Exposure",
     description: "Diversify your investments across international markets and emerging opportunities.",
     gradient: "from-indigo-500 to-purple-500",
@@ -49,7 +366,7 @@ const benefits = [
     iconColor: "text-indigo-500"
   },
   {
-    icon: <BarChart3 className="w-8 h-8" />,
+    icon: <AnimatedBarChartIcon />,
     title: "Detailed Reporting & Ongoing Support",
     description: "Receive comprehensive reports and continuous support throughout your investment journey.",
     gradient: "from-teal-500 to-green-500",
@@ -243,7 +560,7 @@ export const WhyChooseUs = ({ onOpenPopup }: WhyChooseUsProps) => {
               className="group relative"
             >
               <motion.div
-                className={`relative p-6 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl bg-white/95 backdrop-blur-sm border border-white/20 shadow-2xl hover:shadow-3xl transition-all duration-500 overflow-hidden ${benefit.borderColor}`}
+                className={`relative p-6 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl bg-white/95 dark:bg-gray-800/95 backdrop-blur-sm border border-white/20 dark:border-gray-700/50 shadow-2xl hover:shadow-3xl transition-all duration-500 overflow-hidden ${benefit.borderColor}`}
                 whileHover={{
                   borderColor: "rgba(59, 130, 246, 0.5)",
                   transition: { duration: 0.3 }

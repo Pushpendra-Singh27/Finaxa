@@ -1,34 +1,294 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Building2, Globe, Users, Briefcase, Home, TrendingUp, ArrowRight } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
+
+// Custom Animated Icons
+const AnimatedBuildingIcon = () => (
+  <motion.svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className="w-6 h-6"
+  >
+    <motion.path
+      d="M3 21h18M3 7h18M3 7v14M9 7v14M15 7v14M3 7l9-4 9 4"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      initial={{ pathLength: 0 }}
+      animate={{ pathLength: 1 }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
+    />
+    <motion.rect
+      x="6"
+      y="12"
+      width="3"
+      height="6"
+      fill="currentColor"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: [0, 1, 0] }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
+    />
+    <motion.rect
+      x="15"
+      y="12"
+      width="3"
+      height="6"
+      fill="currentColor"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: [0, 1, 0] }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1, delay: 0.5 }}
+    />
+  </motion.svg>
+);
+
+const AnimatedGlobeIcon = () => (
+  <motion.svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className="w-6 h-6"
+  >
+    <motion.circle
+      cx="12"
+      cy="12"
+      r="10"
+      stroke="currentColor"
+      strokeWidth="2"
+      initial={{ pathLength: 0 }}
+      animate={{ pathLength: 1 }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
+    />
+    <motion.path
+      d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"
+      stroke="currentColor"
+      strokeWidth="2"
+      initial={{ pathLength: 0 }}
+      animate={{ pathLength: 1 }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1, delay: 0.3 }}
+    />
+    <motion.circle
+      cx="12"
+      cy="12"
+      r="3"
+      fill="currentColor"
+      initial={{ scale: 0 }}
+      animate={{ scale: [0, 1.2, 1] }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
+    />
+  </motion.svg>
+);
+
+const AnimatedUsersIcon = () => (
+  <motion.svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className="w-6 h-6"
+  >
+    <motion.path
+      d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      initial={{ pathLength: 0 }}
+      animate={{ pathLength: 1 }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
+    />
+    <motion.circle
+      cx="9"
+      cy="7"
+      r="4"
+      stroke="currentColor"
+      strokeWidth="2"
+      initial={{ pathLength: 0 }}
+      animate={{ pathLength: 1 }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1, delay: 0.3 }}
+    />
+    <motion.path
+      d="M22 21v-2a4 4 0 0 0-3-3.87"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      initial={{ pathLength: 0 }}
+      animate={{ pathLength: 1 }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1, delay: 0.6 }}
+    />
+    <motion.path
+      d="M16 3.13a4 4 0 0 1 0 7.75"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      initial={{ pathLength: 0 }}
+      animate={{ pathLength: 1 }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1, delay: 0.9 }}
+    />
+  </motion.svg>
+);
+
+const AnimatedBriefcaseIcon = () => (
+  <motion.svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className="w-6 h-6"
+  >
+    <motion.rect
+      x="2"
+      y="7"
+      width="20"
+      height="14"
+      rx="2"
+      ry="2"
+      stroke="currentColor"
+      strokeWidth="2"
+      initial={{ pathLength: 0 }}
+      animate={{ pathLength: 1 }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
+    />
+    <motion.path
+      d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      initial={{ pathLength: 0 }}
+      animate={{ pathLength: 1 }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1, delay: 0.3 }}
+    />
+    <motion.rect
+      x="6"
+      y="9"
+      width="12"
+      height="4"
+      fill="currentColor"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: [0, 1, 0] }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
+    />
+  </motion.svg>
+);
+
+const AnimatedHomeIcon = () => (
+  <motion.svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className="w-6 h-6"
+  >
+    <motion.path
+      d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      initial={{ pathLength: 0 }}
+      animate={{ pathLength: 1 }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
+    />
+    <motion.polyline
+      points="9,22 9,12 15,12 15,22"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      initial={{ pathLength: 0 }}
+      animate={{ pathLength: 1 }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1, delay: 0.3 }}
+    />
+    <motion.circle
+      cx="12"
+      cy="8"
+      r="1"
+      fill="currentColor"
+      initial={{ scale: 0 }}
+      animate={{ scale: [0, 1.2, 1] }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
+    />
+  </motion.svg>
+);
+
+const AnimatedTrendingIcon = () => (
+  <motion.svg
+    width="24"
+    height="24"
+    viewBox="0 0 24 24"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    className="w-6 h-6"
+  >
+    <motion.polyline
+      points="22,12 18,12 15,21 9,3 6,12 2,12"
+      stroke="currentColor"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      initial={{ pathLength: 0 }}
+      animate={{ pathLength: 1 }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1 }}
+    />
+    <motion.circle
+      cx="18"
+      cy="12"
+      r="2"
+      fill="currentColor"
+      initial={{ scale: 0 }}
+      animate={{ scale: [0, 1.2, 1] }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1, delay: 0.5 }}
+    />
+    <motion.circle
+      cx="6"
+      cy="12"
+      r="2"
+      fill="currentColor"
+      initial={{ scale: 0 }}
+      animate={{ scale: [0, 1.2, 1] }}
+      transition={{ duration: 2, repeat: Infinity, repeatDelay: 1, delay: 1 }}
+    />
+  </motion.svg>
+);
 
 const clientTypes = [
   {
-    icon: <Building2 className="w-6 h-6" />,
+    icon: <AnimatedBuildingIcon />,
     title: "High-Net-Worth Individuals (HNIs)",
     description: "Tailored investment strategies for sophisticated investors seeking exclusive opportunities and premium returns."
   },
   {
-    icon: <Globe className="w-6 h-6" />,
+    icon: <AnimatedGlobeIcon />,
     title: "Global Expats & NRIs",
     description: "Specialized solutions for international investors looking to diversify their portfolios across global markets."
   },
   {
-    icon: <Users className="w-6 h-6" />,
+    icon: <AnimatedUsersIcon />,
     title: "Entrepreneurs & Business Owners",
     description: "Strategic wealth management for business leaders seeking to preserve and grow their entrepreneurial wealth."
   },
   {
-    icon: <Briefcase className="w-6 h-6" />,
+    icon: <AnimatedBriefcaseIcon />,
     title: "Professionals Seeking Passive Income",
     description: "Passive investment opportunities for busy professionals looking to build wealth through hands-off strategies."
   },
   {
-    icon: <Home className="w-6 h-6" />,
+    icon: <AnimatedHomeIcon />,
     title: "Families Planning Long-Term Wealth",
     description: "Multi-generational wealth planning focused on preserving family assets and creating lasting legacies."
   },
   {
-    icon: <TrendingUp className="w-6 h-6" />,
+    icon: <AnimatedTrendingIcon />,
     title: "New & Expanding Investors",
     description: "Comprehensive guidance for both new investors and those looking to expand their investment portfolios."
   }
