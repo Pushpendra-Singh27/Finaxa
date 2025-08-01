@@ -57,29 +57,65 @@ const item: Variants = {
 // Animated Counter Component
 const AnimatedCounter = ({ value, suffix, className }: { value: number, suffix: string, className?: string }) => {
   const [count, setCount] = useState(0);
+  const [hasAnimated, setHasAnimated] = useState(false);
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: "-50px", amount: 0.3 });
 
   useEffect(() => {
-    if (isInView) {
-      const duration = 2000; // 2 seconds
-      const steps = 60;
-      const increment = value / steps;
-      let current = 0;
-      
-      const timer = setInterval(() => {
-        current += increment;
-        if (current >= value) {
-          setCount(value);
-          clearInterval(timer);
-        } else {
-          setCount(Math.floor(current));
-        }
-      }, duration / steps);
+    // Add a small delay to ensure the element is fully rendered
+    const timeoutId = setTimeout(() => {
+      if (isInView && !hasAnimated) {
+        setHasAnimated(true);
+        const duration = 2000; // 2 seconds
+        const steps = 60;
+        const increment = value / steps;
+        let current = 0;
+        
+        const timer = setInterval(() => {
+          current += increment;
+          if (current >= value) {
+            setCount(value);
+            clearInterval(timer);
+          } else {
+            setCount(Math.floor(current));
+          }
+        }, duration / steps);
 
-      return () => clearInterval(timer);
+        return () => clearInterval(timer);
+      }
+    }, 100);
+
+    return () => clearTimeout(timeoutId);
+  }, [isInView, value, hasAnimated]);
+
+  // Fallback: if not triggered by scroll, animate after 1 second
+  useEffect(() => {
+    if (!hasAnimated) {
+      const fallbackTimer = setTimeout(() => {
+        if (!hasAnimated) {
+          setHasAnimated(true);
+          const duration = 2000;
+          const steps = 60;
+          const increment = value / steps;
+          let current = 0;
+          
+          const timer = setInterval(() => {
+            current += increment;
+            if (current >= value) {
+              setCount(value);
+              clearInterval(timer);
+            } else {
+              setCount(Math.floor(current));
+            }
+          }, duration / steps);
+
+          return () => clearInterval(timer);
+        }
+      }, 1000);
+
+      return () => clearTimeout(fallbackTimer);
     }
-  }, [isInView, value]);
+  }, [hasAnimated, value]);
 
   return (
     <span ref={ref} className={className}>
@@ -114,7 +150,7 @@ export const FeaturesSection = () => {
           variants={container}
           initial="hidden"
           whileInView="show"
-          viewport={{ once: true, margin: "-100px" }}
+          viewport={{ once: true, margin: "-50px", amount: 0.3 }}
           className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8"
         >
           {features.map((feature, index) => (
