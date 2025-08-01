@@ -1,5 +1,5 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Building2, Globe, Users, Briefcase, Home, TrendingUp } from 'lucide-react';
+import { Building2, Globe, Users, Briefcase, Home, TrendingUp, ArrowRight } from 'lucide-react';
 
 const clientTypes = [
   {
@@ -36,185 +36,284 @@ const clientTypes = [
 
 export const AboutSection = () => {
   const { scrollYProgress } = useScroll();
-  const y = useTransform(scrollYProgress, [0, 1], [0, -50]);
-  const opacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.8, 0.6]);
   
-  // Parallax effects for About Us section
-  const aboutY = useTransform(scrollYProgress, [0, 1], [0, -30]);
+  // Parallax effects for different sections
+  const aboutY = useTransform(scrollYProgress, [0, 1], [0, -100]);
   const aboutOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.9, 0.7]);
+  const serveY = useTransform(scrollYProgress, [0, 1], [0, -80]);
+  const serveOpacity = useTransform(scrollYProgress, [0, 0.5, 1], [1, 0.9, 0.7]);
 
   return (
-    <section className="py-16 md:py-24 bg-white dark:bg-gray-900 overflow-hidden">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-          <motion.div
-            style={{ 
-              y: aboutY, 
-              opacity: aboutOpacity,
-              transformStyle: 'preserve-3d',
-            }}
-            initial={{ opacity: 0, x: -50, rotateY: -15 }}
-            whileInView={{ opacity: 1, x: 0, rotateY: 0 }}
-            whileHover={{ 
-              rotateY: 5, 
-              scale: 1.02,
-            }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="transform-gpu perspective-1000"
-          >
-            <div className="relative group">
+    <section className="relative overflow-hidden">
+      {/* About Us Section with Background Image */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Background Image with Parallax */}
+        <motion.div 
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `url('/src/assets/dubai1.jpg')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundAttachment: 'fixed',
+            y: aboutY,
+            opacity: aboutOpacity
+          }}
+        />
+        
+        {/* Overlay for readability */}
+        <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+        
+        {/* Floating Elements */}
+        <motion.div 
+          className="absolute top-20 left-20 w-32 h-32 bg-blue-500/20 rounded-full blur-3xl"
+          animate={{
+            scale: [1, 1.2, 1],
+            opacity: [0.3, 0.6, 0.3],
+          }}
+          transition={{
+            duration: 4,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div 
+          className="absolute bottom-20 right-20 w-40 h-40 bg-purple-500/20 rounded-full blur-3xl"
+          animate={{
+            scale: [1.2, 1, 1.2],
+            opacity: [0.4, 0.7, 0.4],
+          }}
+          transition={{
+            duration: 5,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+
+        {/* Content */}
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-4xl mx-auto">
+            <motion.div
+              initial={{ opacity: 0, y: 50 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8 }}
+              className="text-center mb-12"
+            >
+              <motion.h2 
+                className="text-4xl md:text-6xl font-bold text-white mb-6 drop-shadow-2xl"
+                whileHover={{ scale: 1.05 }}
+                transition={{ duration: 0.3 }}
+              >
+                About Us
+              </motion.h2>
               <motion.div 
-                className="absolute -top-6 -left-6 w-32 h-32 bg-blue-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob"
-                whileHover={{ scale: 1.2, rotate: 180 }}
-                transition={{ duration: 0.8 }}
+                className="w-24 h-1 bg-gradient-to-r from-blue-500 to-purple-500 mx-auto mb-8"
+                initial={{ width: 0 }}
+                whileInView={{ width: 96 }}
+                transition={{ duration: 0.8, delay: 0.3 }}
               />
-              <motion.div 
-                className="absolute -bottom-8 -right-8 w-32 h-32 bg-purple-500 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-2000"
-                whileHover={{ scale: 1.2, rotate: -180 }}
-                transition={{ duration: 0.8 }}
-              />
-              <motion.div 
-                className="relative bg-gray-100 dark:bg-gray-800 rounded-2xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-200 dark:border-gray-700"
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="space-y-8 max-w-4xl mx-auto"
+            >
+              <motion.div
+                className="bg-white/10 backdrop-blur-md rounded-2xl p-8 border border-white/20"
                 whileHover={{ 
-                  y: -5,
-                  rotateX: 2,
+                  scale: 1.02,
+                  boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)"
+                }}
+                transition={{ duration: 0.3 }}
+              >
+                <motion.p 
+                  className="text-lg text-white/90 leading-relaxed mb-6"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  transition={{ duration: 0.6, delay: 0.4 }}
+                >
+                  CELESTIA CAPITAL is a premier investment firm committed to creating extraordinary wealth-building opportunities across high-growth sectors. With a strategic focus on Real Estate, Aviation, and Commodities, we offer dynamic and diversified investment avenues that deliver returns of up to 36%.
+                </motion.p>
+                
+                <motion.p 
+                  className="text-lg text-white/90 leading-relaxed mb-6"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  transition={{ duration: 0.6, delay: 0.5 }}
+                >
+                  At Celestia Capital, we blend deep market insight with disciplined investment strategies to help our clients achieve sustainable, long-term growth. Our investment models are built on a foundation of transparency, risk management, and sectoral expertise making us a trusted partner for both seasoned investors and ambitious newcomers.
+                </motion.p>
+                
+                <motion.p 
+                  className="text-lg text-white/90 leading-relaxed"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  transition={{ duration: 0.6, delay: 0.6 }}
+                >
+                  What sets us apart is our ability to identify and unlock value in niche, high yield markets. Whether it's premium real estate developments, aviation asset leasing, or trading in globally sought after commodities like gold and oil, we provide access to exclusive opportunities traditionally reserved for institutional investors.
+                </motion.p>
+              </motion.div>
+
+              <motion.div
+                className="grid grid-cols-1 md:grid-cols-2 gap-6"
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.8, delay: 0.4 }}
+              >
+                <motion.div 
+                  className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <h3 className="text-2xl font-bold text-white mb-4">Our Mission</h3>
+                  <p className="text-white/90">To empower investors with exclusive opportunities that deliver exceptional returns while maintaining the highest standards of integrity and transparency.</p>
+                </motion.div>
+                
+                <motion.div 
+                  className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <h3 className="text-2xl font-bold text-white mb-4">Our Vision</h3>
+                  <p className="text-white/90">To be the leading investment partner for sophisticated investors seeking premium returns in high-growth markets worldwide.</p>
+                </motion.div>
+              </motion.div>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* Who We Serve Section with Background Image */}
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+        {/* Background Image with Parallax */}
+        <motion.div 
+          className="absolute inset-0"
+          style={{
+            backgroundImage: `url('/src/assets/man-suit-is-holding-tablet-front-car-with-graph-it.jpg')`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundAttachment: 'fixed',
+            y: serveY,
+            opacity: serveOpacity
+          }}
+        />
+        
+        {/* Overlay for readability */}
+        <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
+        
+        {/* Floating Elements */}
+        <motion.div 
+          className="absolute top-1/4 right-1/4 w-24 h-24 bg-green-500/20 rounded-full blur-2xl"
+          animate={{
+            scale: [1, 1.3, 1],
+            opacity: [0.2, 0.5, 0.2],
+          }}
+          transition={{
+            duration: 6,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        <motion.div 
+          className="absolute bottom-1/4 left-1/4 w-32 h-32 bg-blue-500/20 rounded-full blur-2xl"
+          animate={{
+            scale: [1.3, 1, 1.3],
+            opacity: [0.3, 0.6, 0.3],
+          }}
+          transition={{
+            duration: 7,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+
+        {/* Content */}
+        <div className="relative z-10 container mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-12"
+          >
+            <motion.h3 
+              className="text-4xl md:text-6xl font-bold text-white mb-6 drop-shadow-2xl"
+              whileHover={{ scale: 1.05 }}
+              transition={{ duration: 0.3 }}
+            >
+              Who We Serve
+            </motion.h3>
+            <motion.p 
+              className="text-xl text-white/90 max-w-3xl mx-auto"
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              At Celestia Capital, we serve a diverse group of forward-thinking investors. Whether you're new to investing or looking to expand your portfolio, we guide you at every step to make informed, profitable decisions.
+            </motion.p>
+            <motion.div 
+              className="w-24 h-1 bg-gradient-to-r from-green-500 to-blue-500 mx-auto mt-8"
+              initial={{ width: 0 }}
+              whileInView={{ width: 96 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+            />
+          </motion.div>
+          
+          <motion.div 
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-7xl mx-auto"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.4 }}
+          >
+            {clientTypes.map((client, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20, rotateX: -15 }}
+                whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
+                whileHover={{ 
+                  y: -10, 
+                  rotateX: 5, 
+                  rotateY: 5,
+                  scale: 1.05,
                   transition: { duration: 0.3 }
                 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: 0.1 * index }}
+                className="group bg-white/10 backdrop-blur-md p-6 rounded-2xl border border-white/20 transform-gpu perspective-1000 hover:bg-white/20 transition-all duration-500"
                 style={{
                   transformStyle: 'preserve-3d',
                 }}
               >
-                <motion.h2 
-                  className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-6"
-                  whileHover={{ 
-                    color: '#2563eb',
-                    transition: { duration: 0.3 }
-                  }}
+                <motion.div 
+                  className="w-14 h-14 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white mb-4 group-hover:from-blue-600 group-hover:to-purple-700 transition-all duration-300"
+                  whileHover={{ rotate: 360, scale: 1.1 }}
+                  transition={{ duration: 0.6 }}
                 >
-                  About Us
-                </motion.h2>
-                
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                  className="space-y-4"
-                >
-                  <motion.p 
-                    className="text-lg text-gray-600 dark:text-gray-300"
-                    whileHover={{ 
-                      color: '#374151',
-                      transition: { duration: 0.3 }
-                    }}
-                  >
-                    CELESTIA CAPITAL is a premier investment firm committed to creating extraordinary wealth-building opportunities across high-growth sectors. With a strategic focus on Real Estate, Aviation, and Commodities, we offer dynamic and diversified investment avenues that deliver returns of up to 36%.
-                  </motion.p>
-                  
-                  <motion.p 
-                    className="text-lg text-gray-600 dark:text-gray-300"
-                    whileHover={{ 
-                      color: '#374151',
-                      transition: { duration: 0.3 }
-                    }}
-                  >
-                    At Celestia Capital, we blend deep market insight with disciplined investment strategies to help our clients achieve sustainable, long-term growth. Our investment models are built on a foundation of transparency, risk management, and sectoral expertise making us a trusted partner for both seasoned investors and ambitious newcomers.
-                  </motion.p>
-                  
-                  <motion.p 
-                    className="text-lg text-gray-600 dark:text-gray-300"
-                    whileHover={{ 
-                      color: '#374151',
-                      transition: { duration: 0.3 }
-                    }}
-                  >
-                    What sets us apart is our ability to identify and unlock value in niche, high yield markets. Whether it's premium real estate developments, aviation asset leasing, or trading in globally sought after commodities like gold and oil, we provide access to exclusive opportunities traditionally reserved for institutional investors.
-                  </motion.p>
-                  
-                  <motion.p 
-                    className="text-lg text-gray-600 dark:text-gray-300"
-                    whileHover={{ 
-                      color: '#374151',
-                      transition: { duration: 0.3 }
-                    }}
-                  >
-                    Driven by performance, guided by integrity, and backed by results Celestia Capital is where vision meets value.
-                  </motion.p>
+                  {client.icon}
                 </motion.div>
+                <h4 className="text-xl font-semibold text-white mb-3 group-hover:text-blue-300 transition-colors duration-300">
+                  {client.title}
+                </h4>
+                <p className="text-white/80 text-sm leading-relaxed">
+                  {client.description}
+                </p>
                 
                 {/* Hover effect overlay */}
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                   initial={{ opacity: 0 }}
                   whileHover={{ opacity: 1 }}
                 />
               </motion.div>
-            </div>
-          </motion.div>
-
-          <motion.div
-            style={{ y, opacity }}
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="space-y-6"
-          >
-            <div className="text-center mb-8">
-              <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-4">
-                Who We Serve
-              </h3>
-              <p className="text-lg text-gray-600 dark:text-gray-300">
-                At Celestia Capital, we serve a diverse group of forward-thinking investors. Whether you're new to investing or looking to expand your portfolio, we guide you at every step to make informed, profitable decisions.
-              </p>
-            </div>
-            
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-              {clientTypes.map((client, index) => (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 20, rotateX: -15 }}
-                  whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
-                  whileHover={{ 
-                    y: -10, 
-                    rotateX: 5, 
-                    rotateY: 5,
-                    scale: 1.05,
-                    transition: { duration: 0.3 }
-                  }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.4, delay: 0.1 * index }}
-                  className="group bg-white dark:bg-gray-800 p-6 rounded-xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 dark:border-gray-700 transform-gpu perspective-1000"
-                  style={{
-                    transformStyle: 'preserve-3d',
-                  }}
-                >
-                  <motion.div 
-                    className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center text-white mb-4 group-hover:from-blue-600 group-hover:to-blue-700 transition-all duration-300"
-                    whileHover={{ rotate: 360, scale: 1.1 }}
-                    transition={{ duration: 0.6 }}
-                  >
-                    {client.icon}
-                  </motion.div>
-                  <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-3 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300">
-                    {client.title}
-                  </h4>
-                  <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
-                    {client.description}
-                  </p>
-                  
-                  {/* Hover effect overlay */}
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                    initial={{ opacity: 0 }}
-                    whileHover={{ opacity: 1 }}
-                  />
-                </motion.div>
-              ))}
-            </div>
+            ))}
           </motion.div>
         </div>
-      </div>
+      </section>
     </section>
   );
 };

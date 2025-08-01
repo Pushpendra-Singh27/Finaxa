@@ -5,6 +5,7 @@ import { StatsSection } from '@/components/StatsSection';
 import { FeaturesSection } from '@/components/FeaturesSection';
 import { AboutSection } from '@/components/AboutSection';
 import { WhyChooseUs } from '@/components/WhyChooseUs';
+import { HowItWorks } from '@/components/HowItWorks';
 import { Footer } from '@/components/Footer';
 import { InvestmentProducts } from '@/components/InvestmentProducts';
 import { AnimatedBackground } from '@/components/AnimatedBackground';
@@ -66,6 +67,7 @@ const Home = () => {
           </ImageBackgroundSection>
           <FeaturesSection />
           <WhyChooseUs />
+          <HowItWorks />
           <StatsSection />
         </main>
         <Footer />

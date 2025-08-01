@@ -1,8 +1,10 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence, useMotionValue } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 import videoFile from '../assets/8396910-uhd_2560_1440_25fps.mp4';
+import slide2Video from '../assets/slide 2.mp4';
+import slide3Video from '../assets/slide 3.mp4';
 
 const slides = [
   {
@@ -23,6 +25,7 @@ const slides = [
     subtitle: "Tailored to Your Financial Goals",
     description: "Our expert advisors create customized investment plans designed to maximize returns while managing risk.",
     bgImage: "https://images.unsplash.com/photo-1436491865332-7a61a109cc05?q=80&w=2074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    video: slide2Video,
     buttonText: "Learn More",
     features: [
       "Retirement Planning",
@@ -35,6 +38,7 @@ const slides = [
     subtitle: "Expert Financial Guidance",
     description: "Partner with our experienced team to navigate the complexities of wealth management and investment.",
     bgImage: "https://images.unsplash.com/photo-1614028674026-a65e31bfd27c?ixlib=rb-4.1.0&auto=format&fit=crop&w=2070&q=80",
+    video: slide3Video,
     buttonText: "Contact Us",
     features: [
       "Market Analysis",
@@ -173,10 +177,14 @@ export const HeroCarousel = () => {
       className="relative h-screen overflow-hidden"
     >
       {/* Background with Parallax */}
-      <motion.div 
-        className="absolute inset-0 overflow-hidden"
-        onMouseMove={handleMouseMove}
-      >
+                <motion.div 
+            className="absolute inset-0 overflow-hidden"
+            onMouseMove={handleMouseMove}
+          >
+            {/* Black overlay for second slide background */}
+            {currentSlide === 1 && (
+              <div className="absolute inset-0 bg-black/20 z-5"></div>
+            )}
         <motion.div 
           style={{ 
             x: backgroundMovement.x,
@@ -186,7 +194,7 @@ export const HeroCarousel = () => {
           }}
           className="absolute inset-0 overflow-hidden"
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/60 to-black/70 z-10" />
+
           
           {/* Video Background for first slide */}
           {hasVideo() ? (
@@ -209,6 +217,7 @@ export const HeroCarousel = () => {
               }}
             >
               <video
+                key={currentSlide}
                 ref={videoRef}
                 className="absolute inset-0 w-full h-full object-cover"
                 autoPlay
@@ -316,83 +325,40 @@ export const HeroCarousel = () => {
             <div className="w-full max-w-7xl mx-auto px-6 relative z-10">
               <div className="w-full max-w-4xl mx-auto text-center space-y-8 px-4 hero-text-white">
                 <motion.div variants={fadeInUp} className="text-center">
-                  <motion.div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                  <motion.div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative">
+                    {/* Frosted glass overlay for text container */}
+                    <div className="absolute inset-0 backdrop-blur-md rounded-2xl -m-4 sm:-m-6 lg:-m-8 z-0 border border-gray-300/20 bg-gray-500/30"></div>
+                    <div className="relative z-10">
                     <motion.h1 
                       variants={fadeInUp}
-                      className={`${responsiveText.title} font-bold ${spacing.title} !text-white drop-shadow-lg leading-tight max-w-4xl mx-auto`}
-                      style={{ color: 'white' }}
+                      className={`${responsiveText.title} font-bold ${spacing.title} !text-gray-900 drop-shadow-lg leading-tight max-w-4xl mx-auto`}
+                      style={{ color: '#111827' }}
                     >
                       {slides[currentSlide].title}
                     </motion.h1>
                     
                     <motion.h2 
                       variants={fadeInUp}
-                      className={`${responsiveText.subtitle} font-medium !text-white ${spacing.subtitle} drop-shadow`}
-                      style={{ color: 'white' }}
+                      className={`${responsiveText.subtitle} font-medium !text-gray-800 ${spacing.subtitle} drop-shadow`}
+                      style={{ color: '#1f2937' }}
                     >
                       {slides[currentSlide].subtitle}
                     </motion.h2>
                     
                     <motion.p 
                       variants={fadeInUp}
-                      className={`${responsiveText.description} !text-white max-w-2xl mx-auto leading-relaxed ${spacing.description} drop-shadow-md`}
-                      style={{ color: 'white' }}
+                      className={`${responsiveText.description} !text-gray-700 max-w-2xl mx-auto leading-relaxed ${spacing.description} drop-shadow-md`}
+                      style={{ color: '#374151' }}
                     >
                       {slides[currentSlide].description}
                     </motion.p>
+                    </div>
                   </motion.div>
                 </motion.div>
 
-                {/* Features List */}
-                <motion.div className="w-full flex justify-center">
-                  <motion.ul 
-                    className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 ${spacing.features} w-full max-w-6xl px-4`}
-                    variants={container}
-                    initial="hidden"
-                    animate="visible"
-                  >
-                  {slides[currentSlide].features.map((feature, index) => (
-                    <motion.li
-                      key={index}
-                      className={`flex items-center justify-center gap-2 ${spacing.featureItem} bg-white/10 backdrop-blur-sm rounded-lg border border-white/20 text-center hover:bg-white/20 transition-all duration-300`}
-                      variants={item}
-                      whileHover={{ 
-                        y: -5,
-                        boxShadow: '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
-                        transition: { duration: 0.2 }
-                      }}
-                    >
-                      <div className="w-2 h-2 flex-shrink-0 rounded-full bg-blue-400" />
-                      <span className={`${responsiveText.feature} font-medium !text-white`} style={{ color: 'white' }}>{feature}</span>
-                    </motion.li>
-                  ))}
-                  </motion.ul>
-                </motion.div>
+                {/* Features List - REMOVED */}
                 
-                <motion.div
-                  variants={fadeInUp}
-                  className={`flex flex-col sm:flex-row ${spacing.buttonGap} justify-center px-4 ${
-                    currentSlide === 0 ? spacing.buttons : 'pt-12'
-                  }`}
-                >
-                  <div className="relative group w-full sm:w-auto">
-                    <div className="absolute inset-0 bg-gradient-to-r from-blue-600/70 to-indigo-700/70 rounded-xl backdrop-blur-md group-hover:from-blue-600/50 group-hover:to-indigo-700/50 group-hover:backdrop-blur-lg transition-all duration-300 border border-white/20"></div>
-                    <Button 
-                      size="lg" 
-                      className={`relative z-10 ${responsiveText.button} px-6 sm:px-8 py-4 sm:py-5 rounded-xl bg-transparent hover:bg-white/5 transition-colors duration-300 w-full sm:w-auto min-w-[180px] flex items-center justify-center text-white font-semibold [text-shadow:_0_1px_2px_rgb(0_0_0_/_40%)]`}
-                    >
-                      {slides[currentSlide].buttonText}
-                      <ArrowRight className="ml-2 h-4 w-4 sm:h-5 sm:w-5" />
-                    </Button>
-                  </div>
-                  <Button 
-                    variant="outline"
-                    size="lg"
-                    className={`${responsiveText.button} px-6 sm:px-8 py-4 sm:py-5 rounded-xl border-2 border-white/20 hover:bg-white/10 hover:text-white transition-all transform hover:-translate-y-0.5 w-full sm:w-auto min-w-[180px] flex items-center justify-center`}
-                  >
-                    View Services
-                  </Button>
-                </motion.div>
+                {/* Action Buttons - REMOVED */}
               </div>
             </div>
           </motion.div>
