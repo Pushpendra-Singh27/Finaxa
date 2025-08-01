@@ -6,12 +6,11 @@ import { useState } from 'react';
 const investments = [
   {
     id: 1,
-    title: 'Investment in Aviation',
-    amount: 'AED 200,000',
-    roi: '25%',
+    title: 'Aviation Investments',
+    tagline: 'Earn from aircraft leasing, aviation operations, and logistics infrastructure—an exclusive, fast-growing sector.',
+    roi: '28%',
     minInvestment: 'AED 200,000',
     period: '2 years',
-    approved: true,
     bonus: '6%',
     specialBenefit: 'Discounted rate on flying hours',
     icon: <Plane className="w-6 h-6 sm:w-8 sm:h-8 text-blue-500" />,
@@ -19,23 +18,21 @@ const investments = [
   },
   {
     id: 2,
-    title: 'Investment in Real Estate',
-    amount: 'AED 150,000',
+    title: 'Real Estate Investments',
+    tagline: 'Invest in premium commercial and residential properties with strong rental yields and capital appreciation.',
     roi: '22%',
     minInvestment: 'AED 150,000',
     period: '5 years',
-    approved: true,
     icon: <Home className="w-6 h-6 sm:w-8 sm:h-8 text-green-500" />,
     bgImage: 'https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=2073&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
   },
   {
     id: 3,
-    title: 'Investment in Commodities',
-    amount: 'AED 100,000',
+    title: 'Commodity Trading',
+    tagline: 'Diversify with gold, oil, and high-demand global commodities. A powerful hedge against inflation and market volatility.',
     roi: '36%',
     minInvestment: 'AED 100,000',
     period: '1 year',
-    approved: true,
     bonus: '6%',
     icon: <BarChart3 className="w-6 h-6 sm:w-8 sm:h-8 text-amber-500" />,
     bgImage: 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
@@ -65,7 +62,11 @@ const item = {
   },
 };
 
-export const InvestmentProducts = () => {
+interface InvestmentProductsProps {
+  onOpenPopup?: () => void;
+}
+
+export const InvestmentProducts = ({ onOpenPopup }: InvestmentProductsProps) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [clickedIndex, setClickedIndex] = useState<number | null>(null);
 
@@ -93,7 +94,7 @@ export const InvestmentProducts = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-8 sm:mb-12 md:mb-16"
         >
-          <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-4">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 dark:text-white mb-2 sm:mb-4">
             Investment Products
           </h2>
           <p className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto px-4">
@@ -120,7 +121,7 @@ export const InvestmentProducts = () => {
               <motion.div
                 className="relative overflow-hidden rounded-2xl sm:rounded-3xl shadow-xl sm:shadow-2xl hover:shadow-2xl sm:hover:shadow-3xl transition-all duration-500 cursor-pointer"
                 animate={{
-                  height: isExpanded(index) ? (investment.bonus ? 800 : 700) : 200,
+                  height: isExpanded(index) ? (investment.bonus ? 900 : 700) : 200,
                   scale: isExpanded(index) ? 1.02 : 1,
                 }}
                 transition={{ 
@@ -138,21 +139,21 @@ export const InvestmentProducts = () => {
 
                 {/* Initial State - Compact View */}
                 <div className="relative z-10 p-4 sm:p-6 md:p-8 lg:p-10 xl:p-12 flex items-center justify-between h-[200px]">
-                  <div className="flex items-center space-x-3 sm:space-x-4 md:space-x-6">
-                    <div className="p-2 sm:p-3 md:p-4 rounded-xl sm:rounded-2xl bg-white/20 backdrop-blur-sm border border-white/30">
+                  <div className="flex items-center space-x-3 sm:space-x-4 md:space-x-6 flex-1 min-w-0">
+                    <div className="p-2 sm:p-3 md:p-4 rounded-xl sm:rounded-2xl bg-white/20 backdrop-blur-sm border border-white/30 flex-shrink-0">
                         {investment.icon}
                     </div>
-                    <div>
+                    <div className="min-w-0 flex-1">
                       <h3 className="text-lg sm:text-xl md:text-2xl lg:text-3xl font-bold text-white mb-1 sm:mb-2">
                       {investment.title}
                     </h3>
-                      <p className="text-xs sm:text-sm md:text-base lg:text-lg text-white/80">
-                        Investment Opportunity
+                      <p className="text-xs sm:text-sm md:text-base lg:text-lg text-white/80 pr-4">
+                        {investment.tagline}
                       </p>
                     </div>
                   </div>
-                  <div className="flex items-center space-x-3 sm:space-x-4 md:space-x-6">
-                    <span className="px-3 sm:px-4 md:px-6 py-2 sm:py-3 text-sm sm:text-base md:text-lg font-bold rounded-full bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-lg">
+                  <div className="flex items-center space-x-3 sm:space-x-4 md:space-x-6 flex-shrink-0">
+                    <span className="px-4 py-2 text-sm font-bold rounded-full bg-gradient-to-r from-green-500 to-emerald-500 text-white shadow-lg whitespace-nowrap">
                       Upto {investment.roi} ROI
                     </span>
                     <motion.div
@@ -179,7 +180,7 @@ export const InvestmentProducts = () => {
                   }}
                 >
                   <div className="border-t border-white/20 pt-4 sm:pt-6 md:pt-8">
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 md:gap-8 mb-6 sm:mb-8">
                       <div>
                         <h4 className="text-base sm:text-lg md:text-xl font-semibold text-white mb-3 sm:mb-4 md:mb-6">
                           Investment Details
@@ -193,19 +194,6 @@ export const InvestmentProducts = () => {
                             }}
                             transition={{ duration: 0.3, delay: 0.2 }}
                           >
-                            <span className="text-xs sm:text-sm md:text-base text-white/80">Investment Amount:</span>
-                            <span className="font-semibold text-blue-300 text-xs sm:text-sm md:text-base">
-                              {investment.amount}
-                            </span>
-                          </motion.div>
-                          <motion.div 
-                            className="flex items-center justify-between p-3 sm:p-4 rounded-lg sm:rounded-xl bg-white/10 backdrop-blur-sm border border-white/20"
-                            animate={{ 
-                              opacity: isExpanded(index) ? 1 : 0,
-                              x: isExpanded(index) ? 0 : -20 
-                            }}
-                            transition={{ duration: 0.3, delay: 0.25 }}
-                          >
                             <span className="text-xs sm:text-sm md:text-base text-white/80">Min. Investment:</span>
                             <span className="font-semibold text-white text-xs sm:text-sm md:text-base">
                               {investment.minInvestment}
@@ -217,128 +205,116 @@ export const InvestmentProducts = () => {
                               opacity: isExpanded(index) ? 1 : 0,
                               x: isExpanded(index) ? 0 : -20 
                             }}
-                            transition={{ duration: 0.3, delay: 0.3 }}
+                            transition={{ duration: 0.3, delay: 0.25 }}
                           >
-                            <span className="text-xs sm:text-sm md:text-base text-white/80">Period:</span>
+                            <span className="text-xs sm:text-sm md:text-base text-white/80">Min. Period:</span>
                             <span className="font-semibold text-white text-xs sm:text-sm md:text-base">
                               {investment.period}
                             </span>
                           </motion.div>
-                          <motion.div 
-                            className="flex items-center justify-between p-3 sm:p-4 rounded-lg sm:rounded-xl bg-white/10 backdrop-blur-sm border border-white/20"
-                            animate={{ 
-                              opacity: isExpanded(index) ? 1 : 0,
-                              x: isExpanded(index) ? 0 : -20 
-                            }}
-                            transition={{ duration: 0.3, delay: 0.35 }}
-                          >
-                            <span className="text-xs sm:text-sm md:text-base text-white/80">Status:</span>
-                            <span className="flex items-center">
-                              <Check className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-green-400 mr-2" />
-                              <span className="font-semibold text-green-400 text-xs sm:text-sm md:text-base">
-                                {investment.approved ? 'Approved' : 'Pending'}
-                              </span>
-                            </span>
-                          </motion.div>
-                          {investment.bonus && (
-                            <>
-                              <motion.div 
-                                className="flex items-center justify-between p-3 sm:p-4 rounded-lg sm:rounded-xl bg-gradient-to-r from-yellow-500/20 to-orange-500/20 backdrop-blur-sm border border-yellow-400/30"
-                                animate={{ 
-                                  opacity: isExpanded(index) ? 1 : 0,
-                                  x: isExpanded(index) ? 0 : -20 
-                                }}
-                                transition={{ duration: 0.3, delay: 0.4 }}
-                              >
-                                <span className="text-xs sm:text-sm md:text-base text-white/90">Bonus after period:</span>
-                                <span className="font-semibold text-yellow-300 text-xs sm:text-sm md:text-base">
-                                  Upto {investment.bonus}
-                                </span>
-                              </motion.div>
-                              <motion.div 
-                                className="p-3 sm:p-4 rounded-lg sm:rounded-xl bg-gradient-to-r from-yellow-500/10 to-orange-500/10 backdrop-blur-sm border border-yellow-400/20"
-                                animate={{ 
-                                  opacity: isExpanded(index) ? 1 : 0,
-                                  x: isExpanded(index) ? 0 : -20 
-                                }}
-                                transition={{ duration: 0.3, delay: 0.45 }}
-                              >
-                                <div className="text-xs sm:text-sm text-white/80 space-y-1">
-                                  <div className="flex items-center">
-                                    <Check className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-400 mr-2 flex-shrink-0" />
-                                    <span>Applicable on long term contract</span>
-                                  </div>
-                                  <div className="flex items-center">
-                                    <Check className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-400 mr-2 flex-shrink-0" />
-                                    <span>Lock-in period: 2 years to be entitled for bonus</span>
-                                  </div>
-                                </div>
-                              </motion.div>
-                            </>
-                          )}
                         </div>
                       </div>
                       
-                      <div className="flex flex-col justify-between">
-                        <div>
-                          <h4 className="text-base sm:text-lg md:text-xl font-semibold text-white mb-3 sm:mb-4 md:mb-6">
-                            Key Benefits
-                          </h4>
-                          <div className="space-y-2 sm:space-y-3">
-                            {[
-                              "High potential returns",
-                              "Diversified portfolio", 
-                              "Professional management",
-                              "Regular reporting"
-                            ].map((benefit, benefitIndex) => (
-                              <motion.div 
-                                key={benefitIndex}
-                                className="flex items-center p-2 sm:p-3 rounded-lg sm:rounded-xl bg-white/10 backdrop-blur-sm border border-white/20"
-                                animate={{ 
-                                  opacity: isExpanded(index) ? 1 : 0,
-                                  x: isExpanded(index) ? 0 : 20 
-                                }}
-                                transition={{ 
-                                  duration: 0.3, 
-                                  delay: 0.2 + (benefitIndex * 0.05) 
-                                }}
-                              >
-                                <Check className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-green-400 mr-2 sm:mr-3 flex-shrink-0" />
-                                <span className="text-xs sm:text-sm md:text-base text-white/90">{benefit}</span>
-                              </motion.div>
-                            ))}
-                            {investment.specialBenefit && (
-                              <motion.div 
-                                className="flex items-center p-2 sm:p-3 rounded-lg sm:rounded-xl bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-sm border border-blue-400/30"
-                                animate={{ 
-                                  opacity: isExpanded(index) ? 1 : 0,
-                                  x: isExpanded(index) ? 0 : 20 
-                                }}
-                                transition={{ 
-                                  duration: 0.3, 
-                                  delay: 0.4 
-                                }}
-                              >
-                                <Check className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-blue-400 mr-2 sm:mr-3 flex-shrink-0" />
-                                <span className="text-xs sm:text-sm md:text-base text-white/90 font-medium">{investment.specialBenefit}</span>
-                              </motion.div>
-                            )}
-                          </div>
+                      <div>
+                        <h4 className="text-base sm:text-lg md:text-xl font-semibold text-white mb-3 sm:mb-4 md:mb-6">
+                          Key Benefits
+                        </h4>
+                        <div className="space-y-2 sm:space-y-3">
+                          {[
+                            "High potential returns",
+                            "Diversified portfolio", 
+                            "Professional management",
+                            "Regular reporting"
+                          ].map((benefit, benefitIndex) => (
+                            <motion.div 
+                              key={benefitIndex}
+                              className="flex items-center p-2 sm:p-3 rounded-lg sm:rounded-xl bg-white/10 backdrop-blur-sm border border-white/20"
+                              animate={{ 
+                                opacity: isExpanded(index) ? 1 : 0,
+                                x: isExpanded(index) ? 0 : 20 
+                              }}
+                              transition={{ 
+                                duration: 0.3, 
+                                delay: 0.2 + (benefitIndex * 0.05) 
+                              }}
+                            >
+                              <Check className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-green-400 mr-2 sm:mr-3 flex-shrink-0" />
+                              <span className="text-xs sm:text-sm md:text-base text-white/90">{benefit}</span>
+                            </motion.div>
+                          ))}
+                          {investment.specialBenefit && (
+                            <motion.div 
+                              className="flex items-center p-2 sm:p-3 rounded-lg sm:rounded-xl bg-gradient-to-r from-blue-500/20 to-purple-500/20 backdrop-blur-sm border border-blue-400/30"
+                              animate={{ 
+                                opacity: isExpanded(index) ? 1 : 0,
+                                x: isExpanded(index) ? 0 : 20 
+                              }}
+                              transition={{ 
+                                duration: 0.3, 
+                                delay: 0.4 
+                              }}
+                            >
+                              <Check className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 text-blue-400 mr-2 sm:mr-3 flex-shrink-0" />
+                              <span className="text-xs sm:text-sm md:text-base text-white/90 font-medium">{investment.specialBenefit}</span>
+                            </motion.div>
+                          )}
                         </div>
-                        
-                        <motion.button 
-                          className="mt-4 sm:mt-6 md:mt-8 w-full py-2 sm:py-3 md:py-4 px-4 sm:px-6 md:px-8 rounded-lg sm:rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold text-sm sm:text-base md:text-lg transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg"
+                      </div>
+                    </div>
+
+                    {/* Bonus Section - Separate Row */}
+                    {investment.bonus && (
+                      <div className="flex flex-col items-center space-y-3 sm:space-y-4 mb-6 sm:mb-8 px-4 sm:px-6 md:px-8">
+                        <motion.div 
+                          className="flex items-center justify-between p-3 sm:p-4 rounded-lg sm:rounded-xl bg-gradient-to-r from-yellow-500/20 to-orange-500/20 backdrop-blur-sm border border-yellow-400/30 w-full"
                           animate={{ 
                             opacity: isExpanded(index) ? 1 : 0,
                             y: isExpanded(index) ? 0 : 20 
                           }}
-                          transition={{ duration: 0.3, delay: 0.4 }}
-                          whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.98 }}
+                          transition={{ duration: 0.3, delay: 0.3 }}
                         >
-                    Invest Now
-                        </motion.button>
+                          <span className="text-xs sm:text-sm md:text-base text-white/90">Bonus after period:</span>
+                          <span className="font-semibold text-yellow-300 text-xs sm:text-sm md:text-base">
+                            Upto {investment.bonus}
+                          </span>
+                        </motion.div>
+                        <motion.div 
+                          className="p-3 sm:p-4 rounded-lg sm:rounded-xl bg-gradient-to-r from-yellow-500/10 to-orange-500/10 backdrop-blur-sm border border-yellow-400/20 w-full"
+                          animate={{ 
+                            opacity: isExpanded(index) ? 1 : 0,
+                            y: isExpanded(index) ? 0 : 20 
+                          }}
+                          transition={{ duration: 0.3, delay: 0.35 }}
+                        >
+                          <div className="text-xs sm:text-sm text-white/80 space-y-1">
+                            <div className="flex items-center">
+                              <Check className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-400 mr-2 flex-shrink-0" />
+                              <span>Applicable on long term contract</span>
+                            </div>
+                            <div className="flex items-center">
+                              <Check className="w-3 h-3 sm:w-4 sm:h-4 text-yellow-400 mr-2 flex-shrink-0" />
+                              <span>Lock-in period: 2 years to be entitled for bonus</span>
+                            </div>
+                          </div>
+                        </motion.div>
                       </div>
+                    )}
+
+                    {/* Invest Now Button - Centered */}
+                    <div className="flex justify-center">
+                      <motion.button 
+                        className="w-full max-w-md py-2 sm:py-3 md:py-4 px-4 sm:px-6 md:px-8 rounded-lg sm:rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-semibold text-sm sm:text-base md:text-lg transition-all duration-300 transform hover:-translate-y-0.5 hover:shadow-lg"
+                        animate={{ 
+                          opacity: isExpanded(index) ? 1 : 0,
+                          y: isExpanded(index) ? 0 : 20 
+                        }}
+                        transition={{ duration: 0.3, delay: 0.4 }}
+                        whileHover={{ scale: 1.02 }}
+                        whileTap={{ scale: 0.98 }}
+                        onClick={onOpenPopup}
+                      >
+                        Schedule Now
+                      </motion.button>
                     </div>
                   </div>
                 </motion.div>

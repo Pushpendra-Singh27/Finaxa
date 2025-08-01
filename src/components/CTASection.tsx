@@ -3,7 +3,11 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ArrowRight, Play } from 'lucide-react';
 
-export const CTASection = () => {
+interface CTASectionProps {
+  onOpenPopup?: () => void;
+}
+
+export const CTASection = ({ onOpenPopup }: CTASectionProps) => {
   const sectionRef = useRef<HTMLDivElement>(null);
   const backgroundRef = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -53,7 +57,7 @@ export const CTASection = () => {
         <div className="max-w-4xl mx-auto">
           <Card className="shadow-3d bg-card/90 backdrop-blur-sm border-border/50">
             <CardContent className="p-12 text-center">
-              <h2 className={`text-4xl md:text-5xl font-bold mb-6 ${isVisible ? 'fade-in-up' : 'opacity-0'}`}>
+              <h2 className={`text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 ${isVisible ? 'fade-in-up' : 'opacity-0'}`}>
                 Ready to Transform Your
                 <span className="gradient-accent bg-clip-text text-transparent"> Investment Strategy?</span>
               </h2>
@@ -82,13 +86,22 @@ export const CTASection = () => {
               
               <div className={`flex flex-col sm:flex-row gap-6 justify-center ${isVisible ? 'fade-in-up' : 'opacity-0'}`} 
                    style={{ animationDelay: '0.6s' }}>
-                <Button size="lg" className="shadow-3d hover:shadow-glow transition-smooth card-3d group">
-                  Start Free Trial
+                <Button 
+                  size="lg" 
+                  className="shadow-3d hover:shadow-glow transition-smooth card-3d group"
+                  onClick={onOpenPopup}
+                >
+                  Book a Free Consultation Today
                   <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
                 </Button>
-                <Button variant="outline" size="lg" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-smooth card-3d group">
+                <Button 
+                  variant="outline" 
+                  size="lg" 
+                  className="border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-smooth card-3d group"
+                  onClick={onOpenPopup}
+                >
                   <Play className="w-5 h-5 mr-2" />
-                  Watch Platform Demo
+                  Talk to an Expert
                 </Button>
               </div>
 

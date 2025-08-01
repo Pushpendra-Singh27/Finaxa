@@ -196,7 +196,7 @@ export const ServicesSection = () => {
             Our Services
           </motion.span>
           <motion.h2 
-            className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70"
+            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-foreground to-foreground/70"
             initial={{ opacity: 0, y: 10 }}
             animate={controls}
             transition={{ delay: 0.3 }}

@@ -87,7 +87,11 @@ const cardVariants = {
   },
 };
 
-export const WhyChooseUs = () => {
+interface WhyChooseUsProps {
+  onOpenPopup?: () => void;
+}
+
+export const WhyChooseUs = ({ onOpenPopup }: WhyChooseUsProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -100,31 +104,79 @@ export const WhyChooseUs = () => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <section className="relative py-16 sm:py-20 md:py-24 lg:py-32 xl:py-40 overflow-hidden bg-gradient-to-b from-gray-50 via-white to-gray-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
-      {/* Animated Background Elements */}
-      <div className="absolute inset-0 overflow-hidden">
+    <section className="relative py-16 sm:py-20 md:py-24 lg:py-32 xl:py-40 overflow-hidden">
+      {/* Animated Background Image */}
+      <div className="absolute inset-0 z-0">
         <motion.div
-          className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-br from-blue-500/20 to-purple-500/20 rounded-full blur-3xl"
+          className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `url('https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=2070&auto=format&fit=crop')`
+          }}
           animate={{
-            x: [0, 30, 0],
-            y: [0, -30, 0],
+            scale: [1, 1.1, 1],
+            rotate: [0, 1, 0]
           }}
           transition={{
             duration: 20,
             repeat: Infinity,
-            ease: "linear"
+            ease: "easeInOut"
           }}
         />
+        
+        {/* Animated Overlay */}
         <motion.div
-          className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-tr from-green-500/20 to-blue-500/20 rounded-full blur-3xl"
+          className="absolute inset-0 bg-gradient-to-b from-gray-900/50 via-gray-700/40 to-gray-300/30"
           animate={{
-            x: [0, -30, 0],
-            y: [0, 30, 0],
+            opacity: [0.4, 0.6, 0.4]
           }}
           transition={{
-            duration: 25,
+            duration: 8,
             repeat: Infinity,
-            ease: "linear"
+            ease: "easeInOut"
+          }}
+        />
+        
+        {/* Floating Elements */}
+        <motion.div
+          className="absolute top-20 left-10 w-32 h-32 bg-blue-500/20 rounded-full blur-xl"
+          animate={{
+            x: [0, 30, 0],
+            y: [0, -20, 0],
+            scale: [1, 1.2, 1]
+          }}
+          transition={{
+            duration: 15,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        />
+        
+        <motion.div
+          className="absolute bottom-20 right-10 w-40 h-40 bg-purple-500/20 rounded-full blur-xl"
+          animate={{
+            x: [0, -40, 0],
+            y: [0, 30, 0],
+            scale: [1, 0.8, 1]
+          }}
+          transition={{
+            duration: 18,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 2
+          }}
+        />
+        
+        <motion.div
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-60 h-60 bg-indigo-500/10 rounded-full blur-2xl"
+          animate={{
+            scale: [1, 1.3, 1],
+            opacity: [0.3, 0.6, 0.3]
+          }}
+          transition={{
+            duration: 12,
+            repeat: Infinity,
+            ease: "easeInOut",
+            delay: 1
           }}
         />
       </div>
@@ -146,15 +198,15 @@ export const WhyChooseUs = () => {
             whileInView={{ scale: 1, opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 text-blue-600 dark:text-blue-400 text-sm font-medium mb-6"
+            className="inline-flex items-center px-4 py-2 rounded-full bg-gradient-to-r from-blue-500/10 to-purple-500/10 border border-blue-500/20 text-white text-sm font-medium mb-6"
           >
             <Star className="w-4 h-4 mr-2" />
             Why Choose Celestia Capital
           </motion.div>
           
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-gray-900 dark:text-white mb-4 sm:mb-6 md:mb-8 leading-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-white mb-4 sm:mb-6 md:mb-8 leading-tight drop-shadow-[0_4px_8px_rgba(0,0,0,0.3)]">
             Why Choose{' '}
-            <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 bg-clip-text text-transparent">
+            <span className="text-white drop-shadow-[0_4px_8px_rgba(0,0,0,0.3)]">
               Celestia Capital?
             </span>
           </h2>
@@ -164,7 +216,7 @@ export const WhyChooseUs = () => {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="text-base sm:text-lg md:text-xl lg:text-2xl text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed"
+            className="text-base sm:text-lg md:text-xl lg:text-2xl text-white max-w-4xl mx-auto leading-relaxed drop-shadow-[0_4px_8px_rgba(0,0,0,0.3)]"
           >
             Partner with Celestia Capital — a trusted name in high-yield, asset-backed investments designed for long-term growth and security.
           </motion.p>
@@ -191,7 +243,7 @@ export const WhyChooseUs = () => {
               className="group relative"
             >
               <motion.div
-                className={`relative p-6 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl bg-white dark:bg-gray-800/50 backdrop-blur-sm border border-gray-200/50 dark:border-gray-700/50 shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden ${benefit.borderColor}`}
+                className={`relative p-6 sm:p-8 lg:p-10 rounded-2xl sm:rounded-3xl bg-white/95 backdrop-blur-sm border border-white/20 shadow-2xl hover:shadow-3xl transition-all duration-500 overflow-hidden ${benefit.borderColor}`}
                 whileHover={{
                   borderColor: "rgba(59, 130, 246, 0.5)",
                   transition: { duration: 0.3 }
@@ -279,9 +331,10 @@ export const WhyChooseUs = () => {
               transition: { duration: 0.2 }
             }}
             whileTap={{ scale: 0.95 }}
+            onClick={onOpenPopup}
             className="inline-flex items-center px-8 py-4 sm:px-12 sm:py-5 rounded-full bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 text-white font-semibold text-lg sm:text-xl shadow-lg hover:shadow-xl transition-all duration-300 group"
           >
-            <span>Start Your Investment Journey</span>
+            <span>Schedule Now</span>
             <motion.div
               className="ml-3 group-hover:translate-x-1 transition-transform duration-300"
             >

@@ -3,7 +3,11 @@ import { Button } from '@/components/ui/button';
 import { Menu, X, Sun, Moon } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
-export const Navigation = () => {
+interface NavigationProps {
+  onOpenPopup?: () => void;
+}
+
+export const Navigation = ({ onOpenPopup }: NavigationProps) => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(() => {
@@ -41,11 +45,11 @@ export const Navigation = () => {
   }, []);
 
   const navItems = [
-    { label: 'Home', href: '/' },
-    { label: 'About', href: '/about' },
-    { label: 'Services', href: '/services' },
+    { label: 'Home', href: '#hero' },
+    { label: 'Services', href: '#products' },
+    { label: 'About Us', href: '#about' },
     { label: 'Analytics', href: '#analytics' },
-    { label: 'Pricing', href: '#pricing' }
+    { label: 'How it Works', href: '#how-it-works' }
   ];
 
   return (
@@ -72,7 +76,24 @@ export const Navigation = () => {
               <a 
                 key={item.label}
                 href={item.href}
-                className={`${isScrolled ? 'text-gray-900 dark:text-white' : 'text-white'} hover:text-blue-300 transition-smooth relative group`}
+                onClick={(e) => {
+                  e.preventDefault();
+                  const element = document.querySelector(item.href);
+                  console.log('Scrolling to:', item.href, 'Element found:', !!element);
+                  if (element) {
+                    const offset = 80; // Account for fixed navigation height
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - offset;
+                    
+                    window.scrollTo({
+                      top: offsetPosition,
+                      behavior: 'smooth'
+                    });
+                  } else {
+                    console.log('Element not found for:', item.href);
+                  }
+                }}
+                className={`${isScrolled ? 'text-gray-900 dark:text-white' : 'text-white'} hover:text-blue-300 transition-smooth relative group cursor-pointer`}
               >
                 {item.label}
                 <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300"></span>
@@ -100,11 +121,8 @@ export const Navigation = () => {
                 </motion.span>
               </AnimatePresence>
             </button>
-            <Button variant="outline" size="sm" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
-              Sign In
-            </Button>
-            <Button size="sm" className="shadow-glow">
-              Get Started
+            <Button size="sm" className="shadow-glow" onClick={onOpenPopup}>
+              Request a Callback
             </Button>
           </div>
 
@@ -125,8 +143,25 @@ export const Navigation = () => {
                 <a 
                   key={item.label}
                   href={item.href}
-                  className="block text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-smooth py-2"
-                  onClick={() => setIsMobileMenuOpen(false)}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setIsMobileMenuOpen(false);
+                    const element = document.querySelector(item.href);
+                    console.log('Mobile scrolling to:', item.href, 'Element found:', !!element);
+                    if (element) {
+                      const offset = 80; // Account for fixed navigation height
+                      const elementPosition = element.getBoundingClientRect().top;
+                      const offsetPosition = elementPosition + window.pageYOffset - offset;
+                      
+                      window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                      });
+                    } else {
+                      console.log('Mobile: Element not found for:', item.href);
+                    }
+                  }}
+                  className="block text-gray-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition-smooth py-2 cursor-pointer"
                 >
                   {item.label}
                 </a>
@@ -155,11 +190,8 @@ export const Navigation = () => {
                     </AnimatePresence>
                   </button>
                 </div>
-                <Button variant="outline" className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground">
-                  Sign In
-                </Button>
-                <Button className="w-full shadow-glow">
-                  Get Started
+                <Button className="w-full shadow-glow" onClick={onOpenPopup}>
+                  Request a Callback
                 </Button>
               </div>
             </div>

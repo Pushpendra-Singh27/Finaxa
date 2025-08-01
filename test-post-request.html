@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test POST Request</title>
+</head>
+<body>
+    <h1>Test POST Request to Google Apps Script</h1>
+    
+    <button onclick="testPost()">Test POST Request</button>
+    <button onclick="testGet()">Test GET Request</button>
+    
+    <div id="result"></div>
+
+    <script>
+        const scriptUrl = 'https://script.google.com/macros/s/AKfycbz4KImozulHcvRTCYRrq2_IJXyBErfduB7-qFRkVq07-U5ggQ6-vNY5AxQnm9ISio-5xQ/exec';
+        
+        async function testGet() {
+            try {
+                console.log('Testing GET request...');
+                const response = await fetch(scriptUrl, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    mode: 'cors',
+                });
+                
+                console.log('GET Response status:', response.status);
+                const text = await response.text();
+                console.log('GET Response text:', text);
+                
+                document.getElementById('result').innerHTML = `
+                    <h3>GET Test Result:</h3>
+                    <p>Status: ${response.status}</p>
+                    <p>Response: ${text}</p>
+                `;
+            } catch (error) {
+                console.error('GET test error:', error);
+                document.getElementById('result').innerHTML = `
+                    <h3>GET Test Error:</h3>
+                    <p>${error.message}</p>
+                `;
+            }
+        }
+        
+        async function testPost() {
+            try {
+                console.log('Testing POST request...');
+                const testData = {
+                    name: 'Test User',
+                    email: 'test@example.com',
+                    phone: '+1234567890',
+                    hearAbout: 'Website',
+                    investment: '50000',
+                    message: 'Test message from POST request'
+                };
+                
+                console.log('Sending data:', testData);
+                
+                const response = await fetch(scriptUrl, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(testData),
+                    mode: 'cors',
+                });
+                
+                console.log('POST Response status:', response.status);
+                console.log('POST Response headers:', response.headers);
+                
+                const text = await response.text();
+                console.log('POST Response text:', text);
+                
+                document.getElementById('result').innerHTML = `
+                    <h3>POST Test Result:</h3>
+                    <p>Status: ${response.status}</p>
+                    <p>Response: ${text}</p>
+                `;
+            } catch (error) {
+                console.error('POST test error:', error);
+                document.getElementById('result').innerHTML = `
+                    <h3>POST Test Error:</h3>
+                    <p>${error.message}</p>
+                `;
+            }
+        }
+    </script>
+</body>
+</html> 

@@ -18,6 +18,12 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				'premium': ['Playfair Display', 'Georgia', 'Times New Roman', 'serif'],
+				'premium-light': ['Playfair Display', 'Georgia', 'Times New Roman', 'serif'],
+				'premium-bold': ['Playfair Display', 'Georgia', 'Times New Roman', 'serif'],
+				'body': ['Source Sans Pro', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'Arial', 'sans-serif'],
+			},
 			colors: {
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',

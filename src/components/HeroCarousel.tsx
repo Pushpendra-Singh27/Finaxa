@@ -48,7 +48,11 @@ const slides = [
   }
 ];
 
-export const HeroCarousel = () => {
+interface HeroCarouselProps {
+  onOpenPopup?: () => void;
+}
+
+export const HeroCarousel = ({ onOpenPopup }: HeroCarouselProps) => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const containerRef = useRef<HTMLDivElement>(null);

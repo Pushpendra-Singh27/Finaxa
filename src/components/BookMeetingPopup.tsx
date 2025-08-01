@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import dubai2 from '@/assets/dubai2.jpg';
 import { FORM_CONFIG } from '@/config/form';
+import { googleScriptProxy } from '@/utils/googleScriptProxy';
 import { testGoogleScript } from '@/utils/testGoogleScript';
 
 interface BookMeetingPopupProps {
@@ -23,6 +24,7 @@ const investmentOptions = [
 ];
 
 export const BookMeetingPopup: React.FC<BookMeetingPopupProps> = ({ open, onClose }) => {
+  console.log('BookMeetingPopup received props - open:', open);
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -35,17 +37,7 @@ export const BookMeetingPopup: React.FC<BookMeetingPopupProps> = ({ open, onClos
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
   const [statusMessage, setStatusMessage] = useState('');
 
-  const handleTestConnection = async () => {
-    console.log('Testing Google Apps Script connection...');
-    const result = await testGoogleScript(FORM_CONFIG.GOOGLE_SCRIPT_URL);
-    console.log('Test result:', result);
-    
-    if (result.success) {
-      alert('✅ Connection test successful! Check console for details.');
-    } else {
-      alert('❌ Connection test failed: ' + result.error);
-    }
-  };
+
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -54,68 +46,18 @@ export const BookMeetingPopup: React.FC<BookMeetingPopupProps> = ({ open, onClos
 
     try {
       const scriptUrl = FORM_CONFIG.GOOGLE_SCRIPT_URL;
+      console.log('Using script URL:', scriptUrl);
+      console.log('Environment variable:', import.meta.env.VITE_GOOGLE_SCRIPT_URL);
       
       // Check if the URL is still the placeholder
-      if (scriptUrl === 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL') {
-        // Simulate API call delay
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        
-        // Mock successful response
-        setSubmitStatus('success');
-        setStatusMessage('Thank you! Your meeting request has been submitted successfully. (Test Mode)');
-        
-        // Reset form after successful submission
-        setTimeout(() => {
-          setForm({
-            name: '',
-            email: '',
-            phone: '',
-            hearAbout: '',
-            investment: '',
-            message: '',
-          });
-          setSubmitStatus('idle');
-          setStatusMessage('');
-          onClose();
-        }, 3000);
-        
-        console.log('Form submitted (Test Mode):', form);
+      if (scriptUrl === 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec' || scriptUrl.includes('YOUR_SCRIPT_ID')) {
+        setSubmitStatus('error');
+        setStatusMessage('Error: Google Apps Script URL not configured. Please set up the environment variable VITE_GOOGLE_SCRIPT_URL.');
         return;
       }
       
-      console.log('Submitting to:', scriptUrl);
-      console.log('Form data:', form);
+      const result = await googleScriptProxy.submitForm(scriptUrl, form);
       
-      const response = await fetch(scriptUrl, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(form),
-      });
-
-      console.log('Response status:', response.status);
-      console.log('Response headers:', response.headers);
-
-      // Check if response is ok
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
-      }
-
-      // Get response text first
-      const responseText = await response.text();
-      console.log('Response text:', responseText);
-
-      // Try to parse as JSON
-      let result;
-      try {
-        result = JSON.parse(responseText);
-      } catch (parseError) {
-        console.error('JSON parse error:', parseError);
-        console.error('Response text was:', responseText);
-        throw new Error('Invalid JSON response from server');
-      }
-
       if (result.success) {
         setSubmitStatus('success');
         setStatusMessage('Thank you! Your meeting request has been submitted successfully.');
@@ -143,7 +85,11 @@ export const BookMeetingPopup: React.FC<BookMeetingPopupProps> = ({ open, onClos
       
       // Provide more specific error messages
       if (error.message.includes('Failed to fetch')) {
-        setStatusMessage('Network error. Please check your connection and try again.');
+        setStatusMessage('Network error. Please check your connection and try again. (Check console for details)');
+        console.error('Network error details:', error);
+        console.error('Error name:', error.name);
+        console.error('Error message:', error.message);
+        console.error('Error stack:', error.stack);
       } else if (error.message.includes('Invalid JSON')) {
         setStatusMessage('Server error. Please try again later or contact support.');
       } else if (error.message.includes('HTTP error')) {
@@ -156,11 +102,16 @@ export const BookMeetingPopup: React.FC<BookMeetingPopupProps> = ({ open, onClos
     }
   };
 
-  if (!open) return null;
+  if (!open) {
+    console.log('Popup is not open, returning null');
+    return null;
+  }
+  
+  console.log('Rendering popup component...');
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 popup-overlay-animate">
-      <div className="popup-content popup-animate relative w-full max-w-md p-8 sm:p-10 flex flex-col gap-2 rounded-2xl overflow-hidden border border-gray-200 shadow-2xl">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-center sm:items-end sm:justify-end p-4 sm:p-6 lg:p-8 bg-black/40 popup-overlay-animate">
+      <div className="popup-content popup-animate relative w-full max-w-[95vw] sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl p-4 sm:p-6 md:p-8 flex flex-col gap-2 rounded-2xl overflow-hidden border border-gray-200 shadow-2xl">
         {/* Background image with blur and overlays */}
         <div className="absolute inset-0 z-0">
           <img
@@ -180,7 +131,7 @@ export const BookMeetingPopup: React.FC<BookMeetingPopupProps> = ({ open, onClos
           >
             &times;
           </button>
-          <h2 className="text-2xl sm:text-3xl font-semibold mb-6 text-center text-white tracking-tight">Book a Meeting</h2>
+          <h2 className="text-xl sm:text-2xl md:text-3xl font-semibold mb-4 sm:mb-6 text-center text-white tracking-tight">Book a Meeting</h2>
           
           {/* Status Message */}
           {submitStatus !== 'idle' && (
@@ -193,12 +144,12 @@ export const BookMeetingPopup: React.FC<BookMeetingPopupProps> = ({ open, onClos
             </div>
           )}
           
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4">
             <div>
-              <label className="block text-sm font-medium text-white mb-1">Name</label>
+              <label className="block text-xs sm:text-sm font-medium text-white mb-1">Name</label>
               <input
                 type="text"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white/90 text-gray-900 transition-all"
+                className="w-full px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white/90 text-gray-900 transition-all"
                 value={form.name}
                 onChange={e => setForm({ ...form, name: e.target.value })}
                 required
@@ -207,10 +158,10 @@ export const BookMeetingPopup: React.FC<BookMeetingPopupProps> = ({ open, onClos
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-white mb-1">Email</label>
+              <label className="block text-xs sm:text-sm font-medium text-white mb-1">Email</label>
               <input
                 type="email"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white/90 text-gray-900 transition-all"
+                className="w-full px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white/90 text-gray-900 transition-all"
                 value={form.email}
                 onChange={e => setForm({ ...form, email: e.target.value })}
                 required
@@ -219,10 +170,10 @@ export const BookMeetingPopup: React.FC<BookMeetingPopupProps> = ({ open, onClos
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-white mb-1">Phone Number</label>
+              <label className="block text-xs sm:text-sm font-medium text-white mb-1">Phone Number</label>
               <input
                 type="tel"
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white/90 text-gray-900 transition-all"
+                className="w-full px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white/90 text-gray-900 transition-all"
                 value={form.phone}
                 onChange={e => setForm({ ...form, phone: e.target.value })}
                 required
@@ -231,9 +182,9 @@ export const BookMeetingPopup: React.FC<BookMeetingPopupProps> = ({ open, onClos
               />
             </div>
             <div>
-              <label className="block text-sm font-medium text-white mb-1">How did you hear about us?</label>
+              <label className="block text-xs sm:text-sm font-medium text-white mb-1">How did you hear about us?</label>
               <select
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white/90 text-gray-900 transition-all"
+                className="w-full px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white/90 text-gray-900 transition-all"
                 value={form.hearAbout}
                 onChange={e => setForm({ ...form, hearAbout: e.target.value })}
                 required
@@ -246,9 +197,9 @@ export const BookMeetingPopup: React.FC<BookMeetingPopupProps> = ({ open, onClos
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-white mb-1">Initial Investment</label>
+              <label className="block text-xs sm:text-sm font-medium text-white mb-1">Initial Investment</label>
               <select
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white/90 text-gray-900 transition-all"
+                className="w-full px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white/90 text-gray-900 transition-all"
                 value={form.investment}
                 onChange={e => setForm({ ...form, investment: e.target.value })}
                 required
@@ -261,31 +212,22 @@ export const BookMeetingPopup: React.FC<BookMeetingPopupProps> = ({ open, onClos
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-white mb-1">Message</label>
+              <label className="block text-xs sm:text-sm font-medium text-white mb-1">Message</label>
               <textarea
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white/90 text-gray-900 transition-all"
-                rows={3}
+                className="w-full px-3 sm:px-4 py-2 text-sm sm:text-base border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 bg-white/90 text-gray-900 transition-all"
+                rows={2}
                 value={form.message}
                 onChange={e => setForm({ ...form, message: e.target.value })}
                 disabled={isSubmitting}
               />
             </div>
             
-            {/* Test Connection Button (for debugging) */}
-            {FORM_CONFIG.GOOGLE_SCRIPT_URL !== 'YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL' && (
-              <button
-                type="button"
-                onClick={handleTestConnection}
-                className="w-full py-2 px-4 bg-gray-600 text-white font-semibold rounded-lg hover:bg-gray-700 transition-all text-sm"
-              >
-                Test Connection
-              </button>
-            )}
+
             
             <button
               type="submit"
               disabled={isSubmitting}
-              className="w-full py-2 px-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-lg shadow-md hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all text-lg mt-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-2 px-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-semibold rounded-lg shadow-md hover:from-blue-700 hover:to-indigo-700 focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all text-sm sm:text-base md:text-lg mt-2 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {isSubmitting ? 'Submitting...' : 'Book Meeting'}
             </button>

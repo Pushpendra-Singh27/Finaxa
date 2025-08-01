@@ -4,7 +4,7 @@ import { Footer } from '@/components/Footer';
 import { AnimatedBackground } from '@/components/AnimatedBackground';
 import { AboutSection } from '@/components/AboutSection';
 import { WhyChooseUs } from '@/components/WhyChooseUs';
-import { StatsSection } from '@/components/StatsSection';
+
 
 const About = () => {
   useEffect(() => {
@@ -47,7 +47,7 @@ const About = () => {
           {/* Hero Section for About Page */}
           <section className="relative py-20 bg-gradient-to-br from-blue-900 via-blue-800 to-indigo-900">
             <div className="container mx-auto px-6 text-center">
-              <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
                 About Celestia Capitals
               </h1>
               <p className="text-xl text-blue-100 max-w-3xl mx-auto">
@@ -58,7 +58,7 @@ const About = () => {
           
           <AboutSection />
           <WhyChooseUs />
-          <StatsSection />
+
         </main>
         <Footer />
       </div>

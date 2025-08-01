@@ -3,7 +3,11 @@ import { Button } from '@/components/ui/button';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { ArrowRight, BarChart3, LineChart, TrendingUp } from 'lucide-react';
 
-export const ParallaxHero = () => {
+interface ParallaxHeroProps {
+  onOpenPopup?: () => void;
+}
+
+export const ParallaxHero = ({ onOpenPopup }: ParallaxHeroProps) => {
   const targetRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: targetRef,
@@ -77,11 +81,11 @@ export const ParallaxHero = () => {
             <span className="inline-block px-4 py-1.5 text-sm font-medium rounded-full bg-primary/10 text-primary mb-6 border border-primary/20">
               AI-Powered Analytics
             </span>
-            <h1 className="text-5xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-indigo-300 leading-tight">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight drop-shadow-[0_4px_8px_rgba(0,0,0,0.3)]">
               Smarter Investing <br />
-              <span className="text-white">Powerful Intelligence</span>
+              <span className="text-white drop-shadow-[0_4px_8px_rgba(0,0,0,0.3)]">Powerful Intelligence</span>
             </h1>
-            <p className="text-xl md:text-2xl text-foreground/80 max-w-3xl mx-auto mt-6">
+            <p className="text-xl md:text-2xl text-white/90 max-w-3xl mx-auto mt-6 drop-shadow-[0_4px_8px_rgba(0,0,0,0.3)]">
               Harness the power of AI and 3D visualization to make data-driven investment decisions with real-time market insights and predictive analytics.
             </p>
           </motion.div>
@@ -92,16 +96,21 @@ export const ParallaxHero = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="flex flex-col sm:flex-row gap-4 justify-center pt-6"
           >
-            <Button size="lg" className="text-lg px-8 py-6 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 transition-all transform hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/20">
-              Start Free Trial
+            <Button 
+              size="lg" 
+              className="text-lg px-8 py-6 rounded-xl bg-gradient-to-r from-blue-500 to-indigo-600 hover:from-blue-600 hover:to-indigo-700 transition-all transform hover:-translate-y-0.5 hover:shadow-lg hover:shadow-blue-500/20"
+              onClick={onOpenPopup}
+            >
+              Book a Free Consultation Today
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
             <Button 
               variant="outline"
               size="lg" 
               className="text-lg px-8 py-6 rounded-xl border-2 border-foreground/10 hover:bg-foreground/5 transition-all transform hover:-translate-y-0.5"
+              onClick={onOpenPopup}
             >
-              Schedule Demo
+              Talk to an Expert
             </Button>
           </motion.div>
 

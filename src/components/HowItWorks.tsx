@@ -63,7 +63,11 @@ const stepVariants = {
   },
 };
 
-export const HowItWorks = () => {
+interface HowItWorksProps {
+  onOpenPopup?: () => void;
+}
+
+export const HowItWorks = ({ onOpenPopup }: HowItWorksProps) => {
   const containerRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: containerRef,
@@ -249,14 +253,7 @@ export const HowItWorks = () => {
           ))}
         </motion.div>
 
-        {/* Connecting Lines */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.8 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.6 }}
-          className="hidden lg:block absolute top-1/2 left-1/4 right-1/4 h-0.5 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-30"
-        />
+
 
         {/* CTA Section */}
         <motion.div
@@ -273,9 +270,10 @@ export const HowItWorks = () => {
               transition: { duration: 0.2 }
             }}
             whileTap={{ scale: 0.95 }}
+            onClick={onOpenPopup}
             className="inline-flex items-center px-8 py-4 sm:px-12 sm:py-5 rounded-full bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 text-white font-semibold text-lg sm:text-xl shadow-lg hover:shadow-xl transition-all duration-300 group"
           >
-            <span>Start Your Investment Journey</span>
+            <span>Talk to an Expert</span>
             <motion.div
               className="ml-3 group-hover:translate-x-1 transition-transform duration-300"
             >

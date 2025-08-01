@@ -46,7 +46,7 @@ const Services = () => {
           {/* Hero Section for Services Page */}
           <section className="relative py-20 bg-gradient-to-br from-green-900 via-green-800 to-emerald-900">
             <div className="container mx-auto px-6 text-center">
-              <h1 className="text-4xl md:text-6xl font-bold text-white mb-6">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6">
                 Our Services
               </h1>
               <p className="text-xl text-green-100 max-w-3xl mx-auto">

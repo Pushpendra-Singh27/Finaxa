@@ -100,7 +100,7 @@ export const AboutSection = () => {
               className="text-center mb-12"
             >
               <motion.h2 
-                className="text-4xl md:text-6xl font-bold text-white mb-6 drop-shadow-2xl"
+                className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 drop-shadow-2xl"
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
               >
@@ -241,7 +241,7 @@ export const AboutSection = () => {
             className="text-center mb-12"
           >
             <motion.h3 
-              className="text-4xl md:text-6xl font-bold text-white mb-6 drop-shadow-2xl"
+              className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 drop-shadow-2xl"
               whileHover={{ scale: 1.05 }}
               transition={{ duration: 0.3 }}
             >

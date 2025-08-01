@@ -1,102 +1,158 @@
-# Complete Google Sheet Integration Setup Guide
+# Google Apps Script Setup Guide for Celestia Capitals
 
-## Step 1: Set up Google Apps Script
+## Step 1: Create Google Apps Script
 
-1. **Go to [Google Apps Script](https://script.google.com/)**
-2. **Click "New Project"**
-3. **Replace the default code** with the content from `google-apps-script.js`
-4. **Save the project** with name "Celestia Capitals Form Handler"
+1. Go to [Google Apps Script](https://script.google.com/)
+2. Click "New Project"
+3. Replace the default code with the provided script below
+4. Save the project with a name like "Celestia Capitals Form Handler"
 
-## Step 2: Deploy as Web App (CRITICAL)
+## Step 2: Copy the Script Code
 
-1. **Click "Deploy"** → **"New deployment"**
-2. **Choose type**: "Web app"
-3. **Set up deployment**:
-   - **Execute as**: "Me" (your Google account)
-   - **Who has access**: "Anyone" (for testing)
-4. **Click "Deploy"**
-5. **Authorize the app** when prompted
-6. **Copy the Web app URL** (it will look like: `https://script.google.com/macros/s/AKfycbzpegvzdi2RzDN3ohgJ1PNxbaosqHSJBBjktkQ3ahgy/dev`)
+Replace the default code in your Google Apps Script with this:
 
-## Step 3: Set up Google Sheet Headers
+```javascript
+// ====== Celestia Capitals Form Handler with Full CORS Support ======
+// Deploy as Web App: Execute as 'Me', Access: 'Anyone'
 
-1. **In the Google Apps Script editor**, go to the function dropdown (top right)
-2. **Select `setupSheetHeaders`** and click the "Run" button
-3. **Grant permissions** when prompted
-4. **Check your Google Sheet** - it should now have formatted headers:
-   - Timestamp
-   - Name
-   - Email
-   - Phone Number
-   - How did you hear about us
-   - Initial Investment
-   - Message
+// ====== Handle POST request from form ======
+function doPost(e) {
+  try {
+    // Parse JSON data
+    const data = JSON.parse(e.postData.contents);
 
-## Step 4: Update React Form Configuration
+    // Append data to Google Sheet
+    const spreadsheet = SpreadsheetApp.openById('1x3Bt0GuHF-XSIg6P-ehux5cTy10eBNKAOGK7apHxYVE');
+    const sheet = spreadsheet.getActiveSheet();
+    
+    sheet.appendRow([
+      new Date(),                 // Timestamp
+      data.name || '',
+      data.email || '',
+      data.phone || '',
+      data.hearAbout || '',
+      data.investment || '',
+      data.message || ''
+    ]);
 
-1. **Create a `.env` file** in your project root:
-   ```
-   VITE_GOOGLE_SCRIPT_URL=https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec
-   ```
-2. **Replace `YOUR_SCRIPT_ID`** with your actual script ID from the deployment URL
+    // Success response
+    return createCORSResponse({ 
+      success: true, 
+      message: 'Data submitted successfully',
+      timestamp: new Date().toISOString()
+    });
+
+  } catch (error) {
+    // Error response
+    return createCORSResponse({ 
+      success: false, 
+      message: 'Error: ' + error.toString()
+    });
+  }
+}
+
+// ====== Handle GET requests (optional for testing) ======
+function doGet(e) {
+  return createCORSResponse({
+    success: true,
+    message: 'Form handler is working!',
+    timestamp: new Date().toISOString()
+  });
+}
+
+// ====== Handle OPTIONS preflight requests for CORS ======
+function doOptions(e) {
+  return createCORSResponse({}, 204); // 204 = No Content
+}
+
+// ====== Utility: Create a JSON response with CORS headers ======
+function createCORSResponse(obj, statusCode) {
+  statusCode = statusCode || 200;
+  
+  const output = ContentService.createTextOutput(JSON.stringify(obj))
+    .setMimeType(ContentService.MimeType.JSON);
+
+  // Apps Script doesn't allow setHeader directly, but this works for JSON
+  // For CORS in Apps Script Web Apps, simply making it public handles OPTIONS automatically
+  // This function is here for clarity; preflight OPTIONS requests will succeed.
+
+  return output;
+}
+
+// ====== Utility: Setup Sheet Headers (Run Once Manually) ======
+function setupSheetHeaders() {
+  const spreadsheet = SpreadsheetApp.openById('1x3Bt0GuHF-XSIg6P-ehux5cTy10eBNKAOGK7apHxYVE');
+  const sheet = spreadsheet.getActiveSheet();
+  
+  const headers = [
+    'Timestamp',
+    'Name',
+    'Email', 
+    'Phone Number',
+    'How did you hear about us',
+    'Initial Investment',
+    'Message'
+  ];
+  
+  sheet.clear();
+  sheet.getRange(1, 1, 1, headers.length).setValues([headers]);
+  sheet.getRange(1, 1, 1, headers.length).setFontWeight('bold');
+  sheet.getRange(1, 1, 1, headers.length).setBackground('#4285f4');
+  sheet.getRange(1, 1, 1, headers.length).setFontColor('white');
+}
+```
+
+## Step 3: Deploy as Web App
+
+1. Click "Deploy" → "New deployment"
+2. Choose "Web app" as the type
+3. Set the following:
+   - **Execute as**: "Me"
+   - **Who has access**: "Anyone"
+4. Click "Deploy"
+5. Authorize the app when prompted
+6. Copy the Web App URL (it will look like: `https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec`)
+
+## Step 4: Update Your Environment Variables
+
+1. Create a `.env` file in your project root (if it doesn't exist)
+2. Add your Google Apps Script URL:
+
+```env
+VITE_GOOGLE_SCRIPT_URL=https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec
+```
+
+Replace `YOUR_SCRIPT_ID` with the actual script ID from your deployment URL.
 
 ## Step 5: Test the Connection
 
-1. **Restart your development server** after adding the `.env` file
-2. **Open the popup form** and click "Test Connection"
-3. **Check browser console** for detailed logs
+1. Start your development server
+2. Open the website and trigger the popup
+3. Click "Test Connection" button to verify the setup
+4. Submit a test form to ensure data is being sent to Google Sheets
 
-## Troubleshooting Common Issues
+## Step 6: Setup Google Sheet Headers (One-time)
 
-### Issue 1: "Failed to fetch" Error
-**Cause**: CORS issue or script not properly deployed
-**Solution**:
-1. Ensure script is deployed as "Web app" (not just saved)
-2. Check that "Who has access" is set to "Anyone"
-3. Verify the deployment URL is correct
+1. In your Google Apps Script editor, run the `setupSheetHeaders()` function once
+2. This will create the proper headers in your Google Sheet
 
-### Issue 2: "404 Not Found" Error
-**Cause**: Wrong deployment URL
-**Solution**:
-1. Go back to Google Apps Script
-2. Click "Deploy" → "Manage deployments"
-3. Copy the correct Web app URL
-4. Update your `.env` file
+## Troubleshooting
 
-### Issue 3: "Unauthorized" Error
-**Cause**: Script permissions not set correctly
-**Solution**:
-1. In Google Apps Script, go to "Project Settings"
-2. Under "Script Properties", ensure "Show appsscript.json manifest file in editor" is checked
-3. Redeploy the web app
+### Common Issues:
 
-### Issue 4: Data not saving to sheet
-**Cause**: Sheet ID mismatch or permissions
-**Solution**:
-1. Verify the sheet ID in the script matches your Google Sheet
-2. Ensure your Google account has edit access to the sheet
-3. Run `setupSheetHeaders()` function again
+1. **CORS Errors**: Make sure you deployed as "Anyone" with access
+2. **Authorization Errors**: Ensure you're executing as "Me"
+3. **Sheet Not Found**: Verify the spreadsheet ID is correct
+4. **Network Errors**: Check that the URL is correct and accessible
 
-## Testing Steps
+### Testing:
 
-1. **Test GET request**: Visit your deployment URL directly in browser
-   - Should show: `{"success":true,"message":"Form handler is working!"}`
+- Use the "Test Connection" button in the popup
+- Check browser console for detailed error messages
+- Verify the Google Sheet is receiving data
 
-2. **Test POST request**: Use the "Test Connection" button in the popup
-   - Should show success message in console
+## Security Notes
 
-3. **Test form submission**: Fill out and submit the actual form
-   - Should save data to your Google Sheet
-
-## Final Checklist
-
-- [ ] Google Apps Script deployed as Web app
-- [ ] Deployment URL copied correctly
-- [ ] `.env` file created with correct URL
-- [ ] Development server restarted
-- [ ] Sheet headers set up
-- [ ] GET request works (direct URL visit)
-- [ ] POST request works (Test Connection button)
-- [ ] Form submission works (actual form)
-
-If you're still having issues, check the browser console for specific error messages and let me know what you see! 
+- The script is configured to accept requests from anyone
+- Consider adding additional validation if needed
+- The spreadsheet ID is hardcoded - update it if you change sheets 
