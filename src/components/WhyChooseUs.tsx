@@ -510,6 +510,36 @@ export const WhyChooseUs = ({ onOpenPopup }: WhyChooseUsProps) => {
           transition={{ duration: 0.8, ease: [0.25, 0.46, 0.45, 0.94] }}
           className="text-center mb-12 sm:mb-16 md:mb-20 lg:mb-24"
         >
+          {/* Light Mode Logo */}
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="flex justify-center mb-6 dark:hidden"
+          >
+            <img 
+              src="/src/assets/Celestia Capital Logo-LightMode.png" 
+              alt="Celestia Capital Logo" 
+              className="h-40 w-auto md:h-52 lg:h-64 xl:h-72" 
+            />
+          </motion.div>
+          
+          {/* Dark Mode Logo */}
+          <motion.div
+            initial={{ scale: 0.9, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.1 }}
+            className="hidden dark:flex justify-center mb-6"
+          >
+            <img 
+              src="/src/assets/Celestia Capital Logo-DarkMode.png" 
+              alt="Celestia Capital Logo" 
+              className="h-40 w-auto md:h-52 lg:h-64 xl:h-72" 
+            />
+          </motion.div>
+          
           <motion.div
             initial={{ scale: 0.8, opacity: 0 }}
             whileInView={{ scale: 1, opacity: 1 }}
