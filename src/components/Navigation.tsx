@@ -65,13 +65,13 @@ export const Navigation = ({ onOpenPopup }: NavigationProps) => {
             <div className="h-28 flex items-center group-hover:scale-105 transition-transform">
               {/* Light Mode Logo */}
               <img 
-                src="/src/assets/Celestia Capital Logo-LightMode.png" 
+                src="/Celestia Capital Logo-LightMode.png" 
                 alt="Celestia Capital Logo" 
                 className="h-full w-auto dark:hidden" 
               />
               {/* Dark Mode Logo */}
               <img 
-                src="/src/assets/Celestia Capital Logo-DarkMode.png" 
+                src="/Celestia Capital Logo-DarkMode.png" 
                 alt="Celestia Capital Logo" 
                 className="h-full w-auto hidden dark:block" 
               />

@@ -8,7 +8,7 @@ import slide3Video from '../assets/slide 3.mp4';
 
 const slides = [
   {
-    title: "CELESTIA CAPITALS",
+    title: "",
     subtitle: "YOUR TRUSTED PARTNER IN FINANCIAL GROWTH",
     description: "Expert financial solutions tailored to help you achieve your investment goals and secure your financial future.",
     bgImage: "https://images.unsplash.com/photo-1462007895615-c8c073bebcd8?q=80&w=1740&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
@@ -327,21 +327,21 @@ export const HeroCarousel = ({ onOpenPopup }: HeroCarouselProps) => {
             className="w-full h-full flex items-center justify-center"
           >
             <div className="w-full max-w-7xl mx-auto px-6 relative z-10">
-              <div className="w-full max-w-4xl mx-auto text-center space-y-8 px-4 hero-text-white">
+              <div className="w-full max-w-4xl mx-auto text-center hero-text-white">
                 <motion.div variants={fadeInUp} className="text-center">
-                  <motion.div className="w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative">
+                  <motion.div className="w-full max-w-6xl mx-auto text-center relative">
                     {/* Frosted glass overlay for text container */}
                     <div className="absolute inset-0 backdrop-blur-md rounded-2xl -m-4 sm:-m-6 lg:-m-8 z-0 border border-gray-300/20 bg-gray-500/30"></div>
                     <div className="relative z-10">
                       {currentSlide === 0 && (
                         <motion.div 
                           variants={fadeInUp}
-                          className="flex justify-center mb-6"
+                          className="flex justify-center -mb-40"
                         >
                           <img 
-                            src="/src/assets/Celestia Capital Logo-LightMode.png" 
+                            src="/Celestia Capital Logo-LightMode.png" 
                             alt="Celestia Capital Logo" 
-                            className="h-32 w-auto" 
+                            className="h-80 w-auto md:h-[28rem] lg:h-[40rem] xl:h-[48rem] -mt-25" 
                           />
                         </motion.div>
                       )}

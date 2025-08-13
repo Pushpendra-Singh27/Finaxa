@@ -519,7 +519,7 @@ export const WhyChooseUs = ({ onOpenPopup }: WhyChooseUsProps) => {
             className="flex justify-center mb-6 dark:hidden"
           >
             <img 
-              src="/src/assets/Celestia Capital Logo-LightMode.png" 
+              src="/Celestia Capital Logo-LightMode.png" 
               alt="Celestia Capital Logo" 
               className="h-40 w-auto md:h-52 lg:h-64 xl:h-72" 
             />
@@ -534,7 +534,7 @@ export const WhyChooseUs = ({ onOpenPopup }: WhyChooseUsProps) => {
             className="hidden dark:flex justify-center mb-6"
           >
             <img 
-              src="/src/assets/Celestia Capital Logo-DarkMode.png" 
+              src="/Celestia Capital Logo-DarkMode.png" 
               alt="Celestia Capital Logo" 
               className="h-40 w-auto md:h-52 lg:h-64 xl:h-72" 
             />
