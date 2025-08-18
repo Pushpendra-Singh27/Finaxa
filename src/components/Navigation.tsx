@@ -58,28 +58,22 @@ export const Navigation = ({ onOpenPopup }: NavigationProps) => {
         ? 'bg-background/80 backdrop-blur-md border-b border-border/50 shadow-card' 
         : 'bg-transparent'
     }`}>
-      <div className="container mx-auto px-6">
-        <div className="flex items-center justify-between h-16">
+      <div className="container w-full max-w-[50%] mx-auto px-4 h-full">
+        <div className="flex items-center justify-between h-40">
           {/* Logo */}
           <a href="/" className="flex items-center space-x-2 group">
-            <div className="h-28 flex items-center group-hover:scale-105 transition-transform">
-              {/* Light Mode Logo */}
+            <div className="h-42 flex items-center group-hover:scale-105 transition-transform -ml-8 mt-4">
+              {/* Always show light mode logo */}
               <img 
                 src="/Celestia Capital Logo-LightMode.png" 
                 alt="Celestia Capital Logo" 
-                className="h-full w-auto dark:hidden" 
-              />
-              {/* Dark Mode Logo */}
-              <img 
-                src="/Celestia Capital Logo-DarkMode.png" 
-                alt="Celestia Capital Logo" 
-                className="h-full w-auto hidden dark:block" 
+                className="h-full w-auto" 
               />
             </div>
           </a>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-8 -ml-8 whitespace-nowrap">
             {navItems.map((item) => (
               <a 
                 key={item.label}
