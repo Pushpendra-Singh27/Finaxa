@@ -58,22 +58,22 @@ export const Navigation = ({ onOpenPopup }: NavigationProps) => {
         ? 'bg-background/80 backdrop-blur-md border-b border-border/50 shadow-card' 
         : 'bg-transparent'
     }`}>
-      <div className="container w-full max-w-[50%] mx-auto px-4 h-full">
+      <div className="container w-full max-w-[95%] mx-auto px-4 h-full">
         <div className="flex items-center justify-between h-40">
           {/* Logo */}
           <a href="/" className="flex items-center space-x-2 group">
-            <div className="h-42 flex items-center group-hover:scale-105 transition-transform -ml-8 mt-4">
+            <div className="flex items-center justify-center group-hover:scale-105 transition-transform -ml-32 -mr-16" style={{ height: '440px' }}>
               {/* Always show light mode logo */}
               <img 
-                src="/Celestia Capital Logo-LightMode.png" 
+                src="/Celestia Capital Logo-LightMode.svg" 
                 alt="Celestia Capital Logo" 
-                className="h-full w-auto" 
+                style={{ height: '440px', width: 'auto', maxHeight: '100%' }}
               />
             </div>
           </a>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8 -ml-8 whitespace-nowrap">
+          <div className="hidden md:flex items-center space-x-8 -ml-8 whitespace-nowrap mr-12">
             {navItems.map((item) => (
               <a 
                 key={item.label}

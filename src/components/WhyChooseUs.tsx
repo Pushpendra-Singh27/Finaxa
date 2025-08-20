@@ -1,6 +1,7 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useState, useRef } from 'react';
 import { Star, ArrowRight } from 'lucide-react';
+import logo from '../../public/Celestia Capital Logo-LightMode.svg';
 
 // Custom Animated Icons for Why Choose Us Section
 const AnimatedTrendingIcon = () => (
@@ -421,7 +422,8 @@ export const WhyChooseUs = ({ onOpenPopup }: WhyChooseUsProps) => {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
-    <section className="relative py-16 sm:py-20 md:py-24 lg:py-32 xl:py-40 overflow-hidden">
+    <section className="relative py-16 sm:py-20 md:py-24 lg:py-32 xl:py-40 overflow-hidden" id="why-choose-us">
+      
       {/* Animated Background Image */}
       <div className="absolute inset-0 z-0">
         <motion.div

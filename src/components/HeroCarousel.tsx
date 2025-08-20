@@ -178,7 +178,7 @@ export const HeroCarousel = ({ onOpenPopup }: HeroCarouselProps) => {
   return (
     <section 
       ref={containerRef}
-      className="relative h-screen overflow-hidden"
+      className="relative h-screen overflow-hidden flex flex-col justify-end"
     >
       {/* Background with Parallax */}
                 <motion.div 
@@ -317,101 +317,88 @@ export const HeroCarousel = ({ onOpenPopup }: HeroCarouselProps) => {
       })}
 
       {/* Content Container */}
-      <div className="relative h-full w-full flex items-center justify-center">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={currentSlide}
-            initial="hidden"
-            animate="visible"
-            exit="hidden"
-            className="w-full h-full flex items-center justify-center"
-          >
-            <div className="w-full max-w-7xl mx-auto px-6 relative z-10">
-              <div className="w-full max-w-4xl mx-auto text-center hero-text-white">
-                <motion.div variants={fadeInUp} className="text-center">
-                  <motion.div className="w-full max-w-6xl mx-auto text-center relative">
-                    {/* Frosted glass overlay for text container */}
-                    <div className="absolute inset-0 backdrop-blur-md rounded-2xl -m-4 sm:-m-6 lg:-m-8 z-0 border border-gray-300/20 bg-gray-500/30"></div>
-                    <div className="relative z-10">
+      <div className="relative h-full w-full flex flex-col">
+        <div className="flex-1"></div> {/* This pushes content to bottom */}
+        <div className="w-full">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={currentSlide}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              className="w-full"
+            >
+              <div className="w-full max-w-6xl mx-auto px-6 relative z-10 pb-20">
+                <div className="w-full max-w-5xl mx-auto text-center hero-text-white">
+                  <motion.div variants={fadeInUp} className="text-center">
+                    <motion.div className="w-full max-w-5xl mx-auto text-center relative">
+                      {/* Frosted glass overlay for text container */}
+                      <div className="absolute inset-0 backdrop-blur-md rounded-2xl -m-4 sm:-m-6 lg:-m-8 z-0 border border-gray-300/20 bg-gray-500/30"></div>
+                      <div className="relative z-10 pb-4">
                       {currentSlide === 0 && (
                         <motion.div 
                           variants={fadeInUp}
-                          className="flex justify-center -mb-40"
+                          className="flex justify-center -mb-16"
                         >
                           <img 
-                            src="/Celestia Capital Logo-LightMode.png" 
+                            src="/Celestia Capital Logo-LightMode.svg" 
                             alt="Celestia Capital Logo" 
-                            className="h-80 w-auto md:h-[28rem] lg:h-[40rem] xl:h-[48rem] -mt-25" 
+                            className="h-48 w-auto md:h-64 lg:h-80 -mt-10" 
                           />
                         </motion.div>
                       )}
-                    <motion.h1 
-                      variants={fadeInUp}
-                      className={`${responsiveText.title} font-bold ${spacing.title} !text-gray-900 drop-shadow-lg leading-tight max-w-4xl mx-auto`}
-                      style={{ color: '#111827' }}
-                    >
-                      {slides[currentSlide].title}
-                    </motion.h1>
-                    
-                    <motion.h2 
-                      variants={fadeInUp}
-                      className={`${responsiveText.subtitle} font-medium !text-gray-800 ${spacing.subtitle} drop-shadow`}
-                      style={{ color: '#1f2937' }}
-                    >
-                      {slides[currentSlide].subtitle}
-                    </motion.h2>
-                    
-                    <motion.p 
-                      variants={fadeInUp}
-                      className={`${responsiveText.description} !text-gray-700 max-w-2xl mx-auto leading-relaxed ${spacing.description} drop-shadow-md`}
-                      style={{ color: '#374151' }}
-                    >
-                      {slides[currentSlide].description}
-                    </motion.p>
-                    </div>
+                        <motion.div className="overflow-hidden">
+                          <motion.h1 
+                            variants={fadeInUp}
+                            className={`${responsiveText.title} font-bold !text-gray-900 drop-shadow-lg leading-none whitespace-nowrap mx-auto`}
+                            style={{ color: '#111827' }}
+                          >
+                            {slides[currentSlide].title}
+                          </motion.h1>
+                        </motion.div>
+                        
+                        <motion.div className="overflow-hidden">
+                          <motion.h2 
+                            variants={fadeInUp}
+                            className={`${responsiveText.subtitle} font-medium !text-gray-800 ${spacing.subtitle} drop-shadow leading-none whitespace-nowrap`}
+                            style={{ color: '#1f2937' }}
+                          >
+                            {slides[currentSlide].subtitle}
+                          </motion.h2>
+                        </motion.div>
+                        
+                        <motion.div className="overflow-hidden">
+                          <motion.p 
+                            variants={fadeInUp}
+                            className={`${responsiveText.description} !text-gray-700 leading-none whitespace-nowrap mt-1 drop-shadow-md`}
+                            style={{ color: '#374151' }}
+                          >
+                            {slides[currentSlide].description}
+                          </motion.p>
+                        </motion.div>
+                      </div>
+                    </motion.div>
                   </motion.div>
-                </motion.div>
-
-                {/* Features List - REMOVED */}
-                
-                {/* Action Buttons - REMOVED */}
+                </div>
               </div>
-            </div>
-          </motion.div>
-        </AnimatePresence>
+            </motion.div>
+          </AnimatePresence>
 
-        {/* Navigation Arrows */}
-        <button 
-          onClick={prevSlide}
-          className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-background/20 backdrop-blur-sm border border-border/50 hover:bg-background/40 transition-colors"
-          aria-label="Previous slide"
-        >
-          <ChevronLeft className="w-6 h-6" />
-        </button>
-        <button 
-          onClick={nextSlide}
-          className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-background/20 backdrop-blur-sm border border-border/50 hover:bg-background/40 transition-colors"
-          aria-label="Next slide"
-        >
-          <ChevronRight className="w-6 h-6" />
-        </button>
-
-        {/* Dots Indicator */}
-        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-20">
-          {slides.map((_, index) => (
-            <button
-              key={index}
-              onClick={() => setCurrentSlide(index)}
-              className={`w-3 h-3 rounded-full transition-all ${
-                index === currentSlide ? 'w-8 bg-blue-400' : 'bg-white/30 hover:bg-white/50'
-              }`}
-              aria-label={`Go to slide ${index + 1}`}
-            />
-          ))}
+          {/* Dots Indicator */}
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+            {slides.map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentSlide(index)}
+                className={`w-3 h-3 rounded-full transition-all ${
+                  index === currentSlide ? 'w-8 bg-blue-400' : 'bg-white/30 hover:bg-white/50'
+                }`}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
+          </div>
         </div>
       </div>
-
-
     </section>
   );
 };

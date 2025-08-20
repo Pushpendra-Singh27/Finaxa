@@ -1,8 +1,5 @@
 import React, { useState } from 'react';
 import dubai2 from '@/assets/dubai2.jpg';
-import { FORM_CONFIG } from '@/config/form';
-import { googleScriptProxy } from '@/utils/googleScriptProxy';
-import { testGoogleScript } from '@/utils/testGoogleScript';
 
 interface BookMeetingPopupProps {
   open: boolean;
@@ -45,20 +42,25 @@ export const BookMeetingPopup: React.FC<BookMeetingPopupProps> = ({ open, onClos
     setSubmitStatus('idle');
 
     try {
-      const scriptUrl = FORM_CONFIG.GOOGLE_SCRIPT_URL;
-      console.log('Using script URL:', scriptUrl);
-      console.log('Environment variable:', import.meta.env.VITE_GOOGLE_SCRIPT_URL);
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+      const response = await fetch(`${apiUrl}/api/data`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          hearAbout: form.hearAbout,
+          investment: form.investment,
+          message: form.message
+        })
+      });
       
-      // Check if the URL is still the placeholder
-      if (scriptUrl === 'https://script.google.com/macros/s/YOUR_SCRIPT_ID/exec' || scriptUrl.includes('YOUR_SCRIPT_ID')) {
-        setSubmitStatus('error');
-        setStatusMessage('Error: Google Apps Script URL not configured. Please set up the environment variable VITE_GOOGLE_SCRIPT_URL.');
-        return;
-      }
+      const result = await response.json();
       
-      const result = await googleScriptProxy.submitForm(scriptUrl, form);
-      
-      if (result.success) {
+      if (response.ok && result.ok) {
         setSubmitStatus('success');
         setStatusMessage('Thank you! Your meeting request has been submitted successfully.');
         // Reset form after successful submission
