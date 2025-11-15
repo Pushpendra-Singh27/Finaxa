@@ -74,7 +74,7 @@ const Home = () => {
     }
     
     // For testing, always show popup regardless of localStorage
-    console.log('Setting up popup timer for 13 seconds...');
+    console.log('Setting up popup timer for 15 seconds...');
     const timer = setTimeout(() => {
       console.log('Popup timer triggered, showing popup...');
       setShowPopup(true);
@@ -84,8 +84,7 @@ const Home = () => {
       } catch (error) {
         console.log('Could not save to localStorage');
       }
-    }, 13000); // 13 seconds
-    // For testing on mobile, you can temporarily change to 5000 (5 seconds)
+    }, 15000); // 15 seconds
     
     console.log('Timer set with ID:', timer);
     return () => {

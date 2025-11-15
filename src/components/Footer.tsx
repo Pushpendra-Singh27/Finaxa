@@ -130,7 +130,7 @@ export const Footer = () => {
                 <div className="w-8 h-8 bg-gradient-to-r from-green-500/20 to-emerald-500/20 rounded-lg flex items-center justify-center">
                   <Phone className="w-4 h-4 text-green-400" />
                 </div>
-                <span className="text-sm">+1 (555) 123-4567</span>
+                <span className="text-sm">+91 77158 41612</span>
               </motion.div>
               <motion.div 
                 className="flex items-center space-x-3 text-gray-300 hover:text-white transition-colors duration-300"

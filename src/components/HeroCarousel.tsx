@@ -335,22 +335,10 @@ export const HeroCarousel = ({ onOpenPopup }: HeroCarouselProps) => {
                       {/* Frosted glass overlay for text container */}
                       <div className="absolute inset-0 backdrop-blur-md rounded-2xl -m-4 sm:-m-6 lg:-m-8 z-0 border border-gray-300/20 bg-gray-500/30"></div>
                       <div className="relative z-10 pb-4">
-                      {currentSlide === 0 && (
-                        <motion.div 
-                          variants={fadeInUp}
-                          className="flex justify-center -mb-16"
-                        >
-                          <img 
-                            src="/Celestia Capital Logo-LightMode.svg" 
-                            alt="Celestia Capital Logo" 
-                            className="h-48 w-auto md:h-64 lg:h-80 -mt-10" 
-                          />
-                        </motion.div>
-                      )}
                         <motion.div className="overflow-hidden">
                           <motion.h1 
                             variants={fadeInUp}
-                            className={`${responsiveText.title} font-bold !text-gray-900 drop-shadow-lg leading-none whitespace-nowrap mx-auto`}
+                            className={`${currentSlide === 0 ? responsiveText.title : responsiveText.subtitle} font-bold !text-gray-900 drop-shadow-lg leading-none whitespace-nowrap mx-auto`}
                             style={{ color: '#111827' }}
                           >
                             {slides[currentSlide].title}

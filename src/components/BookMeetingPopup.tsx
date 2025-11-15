@@ -112,8 +112,9 @@ export const BookMeetingPopup: React.FC<BookMeetingPopupProps> = ({ open, onClos
   console.log('Rendering popup component...');
 
   return (
-    <div className="fixed inset-0 z-[9999] flex items-center justify-center sm:items-end sm:justify-end p-4 sm:p-6 lg:p-8 bg-black/40 popup-overlay-animate">
-      <div className="popup-content popup-animate relative w-full max-w-[95vw] sm:max-w-md md:max-w-lg lg:max-w-xl xl:max-w-2xl p-4 sm:p-6 md:p-8 flex flex-col gap-2 rounded-2xl overflow-hidden border border-gray-200 shadow-2xl">
+    <div className="fixed inset-0 z-[9999] flex items-center justify-end p-3 sm:p-4 md:p-6 bg-black/40 popup-overlay-animate">
+      <div className="popup-content popup-animate relative w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl p-4 sm:p-6 md:p-8 flex flex-col gap-2 rounded-2xl overflow-hidden border border-gray-200 shadow-2xl max-h-[90vh]">
+
         {/* Background image with blur and overlays */}
         <div className="absolute inset-0 z-0">
           <img
@@ -125,7 +126,8 @@ export const BookMeetingPopup: React.FC<BookMeetingPopupProps> = ({ open, onClos
           <div className="absolute inset-0 bg-black/45" />
         </div>
         {/* Popup content */}
-        <div className="relative z-10">
+        <div className="relative z-10 overflow-y-auto pr-1 sm:pr-2">
+
           <button
             className="absolute top-3 right-3 text-white hover:text-blue-300 text-2xl transition-colors focus:outline-none focus:ring-2 focus:ring-blue-400 rounded-full"
             onClick={onClose}
